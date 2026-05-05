@@ -71,7 +71,7 @@ public sealed class VRPlayerController : Component
 		}
 		else
 		{
-			leftJoystick = Input.AnalogMove;
+			leftJoystick = LocomotionWishRules.ToStickFromAnalogMove( Input.AnalogMove );
 			rightJoystick = default;
 		}
 
@@ -111,7 +111,7 @@ public sealed class VRPlayerController : Component
 		}
 		else
 		{
-			leftJoystick = Input.AnalogMove;
+			leftJoystick = LocomotionWishRules.ToStickFromAnalogMove( Input.AnalogMove );
 			var cam = Scene.Camera;
 			headRot = cam.IsValid() ? cam.WorldTransform.Rotation : Transform.Rotation;
 		}

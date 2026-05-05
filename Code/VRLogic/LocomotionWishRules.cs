@@ -1,4 +1,5 @@
 using Sandbox;
+using System;
 
 namespace VRLogic;
 
@@ -7,6 +8,16 @@ namespace VRLogic;
 /// </summary>
 public static class LocomotionWishRules
 {
+	/// <summary>
+	/// 桌面模式 Input.AnalogMove 軸轉換為搖桿語意（x: 左右, y: 前後）。
+	/// 優先使用 z 作前後；若 z 幾乎為 0 則回退到 y（兼容舊輸入資料）。
+	/// </summary>
+	public static Vector2 ToStickFromAnalogMove( Vector3 analogMove )
+	{
+		var forward = MathF.Abs( analogMove.z ) > 0.001f ? analogMove.z : analogMove.y;
+		return new Vector2( analogMove.x, forward );
+	}
+
 	/// <param name="headForward">已抹平或將抹平 Z 的頭部前向（世界空間）。</param>
 	/// <param name="headRight">已抹平或將抹平 Z 的頭部右向（世界空間）。</param>
 	/// <param name="stick">.x 左右、.y 前後（與 Input 搖桿約定一致）。</param>

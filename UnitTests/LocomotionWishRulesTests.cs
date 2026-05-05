@@ -22,4 +22,20 @@ public sealed class LocomotionWishRulesTests
 		var w = LocomotionWishRules.ComputePlanarWishFromHeadAxes( Vector3.Forward, Vector3.Right, default, 100f );
 		Assert.IsTrue( w.IsNearlyZero() );
 	}
+
+	[TestMethod]
+	public void ToStickFromAnalogMove_prefers_z_for_forward_axis()
+	{
+		var stick = LocomotionWishRules.ToStickFromAnalogMove( new Vector3( 0.3f, 0.2f, 1f ) );
+		Assert.AreEqual( 0.3f, stick.x, 0.001f );
+		Assert.AreEqual( 1f, stick.y, 0.001f );
+	}
+
+	[TestMethod]
+	public void ToStickFromAnalogMove_falls_back_to_y_when_z_zero()
+	{
+		var stick = LocomotionWishRules.ToStickFromAnalogMove( new Vector3( -0.5f, 0.75f, 0f ) );
+		Assert.AreEqual( -0.5f, stick.x, 0.001f );
+		Assert.AreEqual( 0.75f, stick.y, 0.001f );
+	}
 }

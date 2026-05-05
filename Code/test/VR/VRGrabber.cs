@@ -1,5 +1,6 @@
 using Sandbox;
 using VRLogic;
+using System.Collections.Generic;
 
 /// <summary>
 /// VR 手部抓取（Interactor）：Hover 由 Trigger 驅動；Attach／Release 在 <see cref="OnFixedUpdate"/> 執行以對齊物理步。
@@ -7,6 +8,7 @@ using VRLogic;
 /// </summary>
 /// <remarks>
 /// 編輯器設定檢核：見原類別註解；<see cref="AttachmentName"/> 預設與 <see cref="VrInteractionConstants.DefaultGripAttachmentName"/> 一致。
+/// 桌面模式（非 VR）：勿使用 <see cref="Game.IsRunningInVR"/> 為假時的 <c>Input.VR</c>；以 <see cref="PcGripActionLeft"/>／<see cref="PcGripActionRight"/>（預設 attack1／attack2）類比左右手 Grip，放手時線速度為零。
 /// </remarks>
 public sealed class VRGrabber : Component, Component.ITriggerListener
 {
@@ -25,10 +27,19 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	[Property, Group( "輸入" )]
 	public float GripReleaseThreshold { get; set; } = VrInteractionConstants.DefaultGripReleaseThreshold;
 
+	[Property, Group( "輸入" ), Description( "桌面模式：左手 Grip 對應的 Input action（預設滑鼠左鍵／attack1）。" )]
+	public string PcGripActionLeft { get; set; } = "attack1";
+
+	[Property, Group( "輸入" ), Description( "桌面模式：右手 Grip 對應的 Input action（預設滑鼠右鍵／attack2）。" )]
+	public string PcGripActionRight { get; set; } = "attack2";
+
+	[Property, Group( "抓取條件" ), Description( "手部抓取點與候選物中心的最大距離；即使 Trigger 進入，超過此距離也不抓取。" )]
+	public float MaxGrabDistance { get; set; } = 12f;
+
 	/// <summary>Idle：無候選；Hovering：Trigger 內有物；Holding：已建立關節。</summary>
 	public GrabInteractorState State { get; private set; } = GrabInteractorState.Idle;
 
-	GameObject _touchingObject;
+	readonly HashSet<GameObject> _touchingObjects = new();
 	GameObject _heldObject;
 	FixedJoint _grabJoint;
 
@@ -38,16 +49,16 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 	protected override void OnUpdate()
 	{
-		var hand = IsLeftHand ? Input.VR.LeftHand : Input.VR.RightHand;
-		var grip = hand.Grip.Value;
+		ReadGripAndThrowVelocity( out var grip, out var throwVelocity );
+		var candidate = FindClosestValidCandidate();
 
-		if ( GrabInteractionRules.ShouldStartGrab( grip, GripPressThreshold, _heldObject is not null, _touchingObject is not null ) )
-			_pendingGrabTarget = _touchingObject;
+		if ( GrabInteractionRules.ShouldStartGrab( grip, GripPressThreshold, _heldObject is not null, candidate is not null ) )
+			_pendingGrabTarget = candidate;
 
 		if ( GrabInteractionRules.ShouldReleaseGrab( grip, GripReleaseThreshold, _heldObject is not null ) )
 		{
 			_pendingRelease = true;
-			_releaseLinearVelocity = hand.Velocity;
+			_releaseLinearVelocity = throwVelocity;
 		}
 
 		UpdatePresentationState();
@@ -64,8 +75,8 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 		if ( _pendingGrabTarget is not null && _heldObject is null )
 		{
-			var hand = IsLeftHand ? Input.VR.LeftHand : Input.VR.RightHand;
-			if ( hand.Grip.Value < GripPressThreshold )
+			ReadGripAndThrowVelocity( out var grip, out _ );
+			if ( grip < GripPressThreshold )
 			{
 				_pendingGrabTarget = null;
 				return;
@@ -77,14 +88,72 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 		}
 	}
 
+	/// <summary>VR：實際 Grip 與手部線速度；桌面：類比 Grip（0／1）與零速度。</summary>
+	void ReadGripAndThrowVelocity( out float grip, out Vector3 throwVelocity )
+	{
+		if ( Game.IsRunningInVR )
+		{
+			var ctl = IsLeftHand ? Input.VR.LeftHand : Input.VR.RightHand;
+			grip = ctl.Grip.Value;
+			throwVelocity = ctl.Velocity;
+			return;
+		}
+
+		var action = IsLeftHand ? PcGripActionLeft : PcGripActionRight;
+		grip = Input.Down( action ) ? 1f : 0f;
+		throwVelocity = Vector3.Zero;
+	}
+
 	void UpdatePresentationState()
 	{
 		if ( _heldObject is not null )
 			State = GrabInteractorState.Holding;
-		else if ( _touchingObject is not null )
+		else if ( FindClosestValidCandidate() is not null )
 			State = GrabInteractorState.Hovering;
 		else
 			State = GrabInteractorState.Idle;
+	}
+
+	GameObject FindClosestValidCandidate()
+	{
+		_touchingObjects.RemoveWhere( go => go is null || !go.IsValid() );
+		if ( _touchingObjects.Count == 0 )
+			return null;
+
+		var grabPoint = ResolveGrabPoint();
+		var maxDistanceSq = MaxGrabDistance * MaxGrabDistance;
+		GameObject best = null;
+		float bestDistanceSq = float.MaxValue;
+
+		foreach ( var go in _touchingObjects )
+		{
+			if ( !go.IsValid() || !TryResolveRigidbody( go, out _ ) )
+				continue;
+
+			var d2 = (go.WorldPosition - grabPoint).LengthSquared;
+			if ( !GrabInteractionRules.WithinGrabDistanceSquared( d2, maxDistanceSq ) )
+				continue;
+
+			if ( d2 < bestDistanceSq )
+			{
+				bestDistanceSq = d2;
+				best = go;
+			}
+		}
+
+		return best;
+	}
+
+	Vector3 ResolveGrabPoint()
+	{
+		if ( HandRenderer is not null && !string.IsNullOrEmpty( AttachmentName ) )
+		{
+			var attachmentTx = HandRenderer.GetAttachment( AttachmentName );
+			if ( attachmentTx.HasValue )
+				return attachmentTx.Value.Position;
+		}
+
+		return WorldPosition;
 	}
 
 	public static bool TryResolveRigidbody( GameObject root, out Rigidbody rb )
@@ -149,13 +218,12 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
 		if ( TryResolveRigidbody( other.GameObject, out _ ) )
-			_touchingObject = other.GameObject;
+			_touchingObjects.Add( other.GameObject );
 	}
 
 	void ITriggerListener.OnTriggerExit( Collider other )
 	{
-		if ( _touchingObject == other.GameObject )
-			_touchingObject = null;
+		_touchingObjects.Remove( other.GameObject );
 	}
 }
 

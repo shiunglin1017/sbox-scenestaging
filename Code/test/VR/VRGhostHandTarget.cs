@@ -36,6 +36,12 @@ public sealed class VRGhostHandTarget : Component
 	[Property, Group( "Debug" )]
 	public bool ShowDebugGizmo { get; set; }
 
+	[Property, Group( "Debug" ), Description( "來源失效時輸出一次警告，避免右手靜默消失。" )]
+	public bool WarnWhenSourceMissing { get; set; } = true;
+
+	bool _warnedMissingSource;
+	bool _warnedMissingAttachment;
+
 	protected override void OnUpdate()
 	{
 		if ( !SyncInFixedUpdate )
@@ -57,7 +63,13 @@ public sealed class VRGhostHandTarget : Component
 			var att = HandRenderer.GetAttachment( AttachmentName );
 			if ( att.HasValue )
 			{
+				_warnedMissingAttachment = false;
 				worldTx = new Transform( att.Value.Position, att.Value.Rotation );
+			}
+			else if ( WarnWhenSourceMissing && !_warnedMissingAttachment )
+			{
+				_warnedMissingAttachment = true;
+				Log.Warning( $"VRGhostHandTarget({GameObject.Name}) attachment '{AttachmentName}' 不存在，改用來源 transform。" );
 			}
 		}
 
@@ -65,7 +77,17 @@ public sealed class VRGhostHandTarget : Component
 			worldTx = ResolveBaseWorldTransform();
 
 		if ( !worldTx.HasValue )
+		{
+			if ( WarnWhenSourceMissing && !_warnedMissingSource )
+			{
+				_warnedMissingSource = true;
+				var hand = IsLeftHand ? "Left" : "Right";
+				Log.Warning( $"VRGhostHandTarget({GameObject.Name}) 無可用來源：hand={hand}, UseVrInputDirect={UseVrInputDirect}, TransformSourceValid={TransformSource.IsValid()}。" );
+			}
 			return;
+		}
+
+		_warnedMissingSource = false;
 
 		WorldTransform = worldTx.Value;
 	}

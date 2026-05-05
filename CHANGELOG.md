@@ -31,7 +31,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - `.sbproj` `ControlModes` now enables `Keyboard` and `Gamepad` alongside `VR` so desktop and VR can run from the same project configuration.
 
 ### Fixed
-- N/A
+- `VRGrabber`: desktop (`Game.IsRunningInVR == false`) no longer reads `Input.VR` hand grips (which caused `NullReferenceException`); uses configurable mouse actions (`attack1` / `attack2` by default) per hand for grip analog.
 
 ### Removed
 - N/A

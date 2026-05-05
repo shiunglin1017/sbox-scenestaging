@@ -35,4 +35,16 @@ public sealed class GrabInteractionRulesTests
 	{
 		Assert.IsFalse( GrabInteractionRules.ShouldReleaseGrab( 0.5f, 0.2f, hasHeldObject: true ) );
 	}
+
+	[TestMethod]
+	public void WithinGrabDistanceSquared_true_when_inside_limit()
+	{
+		Assert.IsTrue( GrabInteractionRules.WithinGrabDistanceSquared( 9f, 16f ) );
+	}
+
+	[TestMethod]
+	public void WithinGrabDistanceSquared_false_when_outside_limit()
+	{
+		Assert.IsFalse( GrabInteractionRules.WithinGrabDistanceSquared( 16.01f, 16f ) );
+	}
 }

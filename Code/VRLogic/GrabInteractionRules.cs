@@ -14,4 +14,9 @@ public static class GrabInteractionRules
 	{
 		return gripValue < releaseThreshold && hasHeldObject;
 	}
+
+	public static bool WithinGrabDistanceSquared( float distanceSquared, float maxDistanceSquared )
+	{
+		return distanceSquared <= maxDistanceSquared;
+	}
 }
