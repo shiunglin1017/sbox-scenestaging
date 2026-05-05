@@ -19,4 +19,16 @@ public static class AlyxFeelTuningDefaults
 
 	/// <summary>長物第二隻手：建議修飾主手關節目標，而非第二個 FixedJoint 焊死本體（設計註記）。</summary>
 	public const string TwoHandedNote = "Secondary hand should bias primary grab constraint or use auxiliary spring, not duplicate fixed weld.";
+
+	/// <summary>投擲訊號：預設保留樣本數。</summary>
+	public const int ThrowSignalSampleCount = 10;
+
+	/// <summary>投擲訊號：峰值鄰域大小（峰值前後各 N 筆）。</summary>
+	public const int ThrowPeakNeighborhood = 3;
+
+	/// <summary>放手線速度安全上限。</summary>
+	public const float ThrowMaxLinearSpeed = 1200f;
+
+	/// <summary>放手角速度安全上限。</summary>
+	public const float ThrowMaxAngularSpeed = 60f;
 }

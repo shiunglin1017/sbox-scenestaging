@@ -1,5 +1,6 @@
 using Sandbox;
 using VRLogic;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -36,6 +37,27 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	[Property, Group( "抓取條件" ), Description( "手部抓取點與候選物中心的最大距離；即使 Trigger 進入，超過此距離也不抓取。" )]
 	public float MaxGrabDistance { get; set; } = 12f;
 
+	[Property, Group( "抓取條件" ), Description( "抓取瞬間是否清空物件線速度與角速度，降低關節建立時的抖動。" )]
+	public bool ResetVelocityOnGrab { get; set; } = true;
+
+	[Property, Group( "投擲估算" ), Description( "釋放時使用近期速度訊號做峰值鄰域平均，而非只取當下瞬間速度。" )]
+	public bool UseThrowSignalEstimator { get; set; } = true;
+
+	[Property, Group( "投擲估算" ), Description( "保留最近 N 筆手部速度樣本。" )]
+	public int ThrowSignalSampleCount { get; set; } = AlyxFeelTuningDefaults.ThrowSignalSampleCount;
+
+	[Property, Group( "投擲估算" ), Description( "峰值前後取樣的鄰域大小；3 表示峰值前後各 3 筆。" )]
+	public int ThrowPeakNeighborhood { get; set; } = AlyxFeelTuningDefaults.ThrowPeakNeighborhood;
+
+	[Property, Group( "投擲估算" ), Description( "放手線速度上限（世界單位/秒）。" )]
+	public float MaxReleaseLinearSpeed { get; set; } = AlyxFeelTuningDefaults.ThrowMaxLinearSpeed;
+
+	[Property, Group( "投擲估算" ), Description( "放手角速度上限（弧度/秒）。" )]
+	public float MaxReleaseAngularSpeed { get; set; } = AlyxFeelTuningDefaults.ThrowMaxAngularSpeed;
+
+	[Property, Group( "投擲估算" ), Description( "為真時放手沿用估算角速度；否則維持既有行為（角速度歸零）。" )]
+	public bool PreserveReleaseAngularVelocity { get; set; } = true;
+
 	/// <summary>Idle：無候選；Hovering：Trigger 內有物；Holding：已建立關節。</summary>
 	public GrabInteractorState State { get; private set; } = GrabInteractorState.Idle;
 
@@ -46,10 +68,17 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	GameObject _pendingGrabTarget;
 	bool _pendingRelease;
 	Vector3 _releaseLinearVelocity;
+	Vector3 _releaseAngularVelocity;
+	readonly ThrowSignalBuffer _throwSignalBuffer = new();
 
 	protected override void OnUpdate()
 	{
-		ReadGripAndThrowVelocity( out var grip, out var throwVelocity );
+		ReadGripAndThrowVelocity( out var grip, out var throwVelocity, out var throwAngularVelocity );
+		_throwSignalBuffer.Push(
+			throwVelocity,
+			throwAngularVelocity,
+			Time.Now,
+			Math.Max( 1, ThrowSignalSampleCount ) );
 		var candidate = FindClosestValidCandidate();
 
 		if ( GrabInteractionRules.ShouldStartGrab( grip, GripPressThreshold, _heldObject is not null, candidate is not null ) )
@@ -59,6 +88,19 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 		{
 			_pendingRelease = true;
 			_releaseLinearVelocity = throwVelocity;
+			_releaseAngularVelocity = throwAngularVelocity;
+			if ( UseThrowSignalEstimator &&
+				ThrowEstimator.TryEstimate(
+					_throwSignalBuffer,
+					Math.Max( 0, ThrowPeakNeighborhood ),
+					MaxReleaseLinearSpeed,
+					MaxReleaseAngularSpeed,
+					out var estimatedLinear,
+					out var estimatedAngular ) )
+			{
+				_releaseLinearVelocity = estimatedLinear;
+				_releaseAngularVelocity = estimatedAngular;
+			}
 		}
 
 		UpdatePresentationState();
@@ -75,7 +117,7 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 		if ( _pendingGrabTarget is not null && _heldObject is null )
 		{
-			ReadGripAndThrowVelocity( out var grip, out _ );
+			ReadGripAndThrowVelocity( out var grip, out _, out _ );
 			if ( grip < GripPressThreshold )
 			{
 				_pendingGrabTarget = null;
@@ -89,19 +131,22 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	}
 
 	/// <summary>VR：實際 Grip 與手部線速度；桌面：類比 Grip（0／1）與零速度。</summary>
-	void ReadGripAndThrowVelocity( out float grip, out Vector3 throwVelocity )
+	void ReadGripAndThrowVelocity( out float grip, out Vector3 throwVelocity, out Vector3 throwAngularVelocity )
 	{
 		if ( Game.IsRunningInVR )
 		{
 			var ctl = IsLeftHand ? Input.VR.LeftHand : Input.VR.RightHand;
 			grip = ctl.Grip.Value;
 			throwVelocity = ctl.Velocity;
+			var angular = ctl.AngularVelocity;
+			throwAngularVelocity = new Vector3( angular.pitch, angular.yaw, angular.roll );
 			return;
 		}
 
 		var action = IsLeftHand ? PcGripActionLeft : PcGripActionRight;
 		grip = Input.Down( action ) ? 1f : 0f;
 		throwVelocity = Vector3.Zero;
+		throwAngularVelocity = Vector3.Zero;
 	}
 
 	void UpdatePresentationState()
@@ -175,20 +220,14 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 		_heldObject = obj;
 
-		if ( HandRenderer is not null && !string.IsNullOrEmpty( AttachmentName ) )
+		if ( ComputeGrabPose( obj, out var targetObjectPose ) )
 		{
-			var attachmentTx = HandRenderer.GetAttachment( AttachmentName );
-
-			if ( attachmentTx.HasValue )
+			obj.Transform.Position = targetObjectPose.Position;
+			obj.Transform.Rotation = targetObjectPose.Rotation;
+			if ( ResetVelocityOnGrab && TryResolveRigidbody( obj, out var rb ) )
 			{
-				obj.Transform.Position = attachmentTx.Value.Position;
-				obj.Transform.Rotation = attachmentTx.Value.Rotation;
-
-				if ( TryResolveRigidbody( obj, out var rb ) )
-				{
-					rb.Velocity = Vector3.Zero;
-					rb.AngularVelocity = Vector3.Zero;
-				}
+				rb.Velocity = Vector3.Zero;
+				rb.AngularVelocity = Vector3.Zero;
 			}
 		}
 
@@ -206,7 +245,7 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 		if ( released is not null && released.IsValid() && TryResolveRigidbody( released, out var rb ) )
 		{
 			rb.Velocity = AlyxFeelTuningDefaults.PreferHandLinearVelocityOnRelease ? _releaseLinearVelocity : rb.Velocity;
-			rb.AngularVelocity = Vector3.Zero;
+			rb.AngularVelocity = PreserveReleaseAngularVelocity ? _releaseAngularVelocity : Vector3.Zero;
 		}
 
 		if ( released is not null && released.IsValid() )
@@ -224,6 +263,40 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	void ITriggerListener.OnTriggerExit( Collider other )
 	{
 		_touchingObjects.Remove( other.GameObject );
+	}
+
+	bool ComputeGrabPose( GameObject obj, out Transform objectPose )
+	{
+		objectPose = obj.WorldTransform;
+
+		var handPose = ResolveHandPose();
+		var grabbable = obj.Components.Get<Grabbable>( FindMode.EnabledInSelfAndDescendants );
+
+		if ( grabbable.IsValid() && grabbable.TryGetPivotAlignedPose( handPose, out objectPose ) )
+			return true;
+
+		if ( grabbable.IsValid() )
+		{
+			objectPose = grabbable.ComputeEdgeFallbackPose( handPose );
+			return true;
+		}
+
+		var toObject = obj.WorldPosition - handPose.Position;
+		var fallbackDirection = toObject.LengthSquared > 0.0001f ? toObject.Normal : -handPose.Rotation.Forward;
+		objectPose = new Transform( handPose.Position + fallbackDirection * 4.0f, handPose.Rotation );
+		return true;
+	}
+
+	Transform ResolveHandPose()
+	{
+		if ( HandRenderer is not null && !string.IsNullOrEmpty( AttachmentName ) )
+		{
+			var attachmentTx = HandRenderer.GetAttachment( AttachmentName );
+			if ( attachmentTx.HasValue )
+				return new Transform( attachmentTx.Value.Position, attachmentTx.Value.Rotation );
+		}
+
+		return WorldTransform;
 	}
 }
 
