@@ -1,4 +1,6 @@
 using Sandbox;
+using System;
+using VRLogic;
 
 /// <summary>
 /// 手部 root 穩定器：確保 root 具有穩定碰撞體，並以 Slerp 平滑追隨目標旋轉。
@@ -33,8 +35,12 @@ public sealed class VRRootColliderStabilizer : Component
 			return;
 
 		var target = RotationSource.WorldRotation;
-		var maxStepFactor = MaxDegreesPerSecond <= 0.0f ? 1.0f : (MaxDegreesPerSecond / 720.0f);
-		var t = Time.Delta * RotationLerpSpeed * maxStepFactor;
+		var currentForward = WorldRotation.Forward.Normal;
+		var targetForward = target.Forward.Normal;
+		var dot = Math.Clamp( Vector3.Dot( currentForward, targetForward ), -1.0f, 1.0f );
+		var angleDeg = MathF.Acos( dot ) * 57.29578f;
+		var baseT = Time.Delta * RotationLerpSpeed;
+		var t = RotationClampRules.ClampInterpolationBySpeed( angleDeg, baseT, MaxDegreesPerSecond, Time.Delta );
 		WorldRotation = Rotation.Slerp( WorldRotation, target, t );
 	}
 

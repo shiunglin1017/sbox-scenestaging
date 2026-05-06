@@ -434,6 +434,9 @@
                         "component_type": "SkinnedModelRenderer"
                       },
                       "IsLeftHand": true,
+                      "MaxGrabDistance": 12,
+                      "MaxReleaseAngularSpeed": 60,
+                      "MaxReleaseLinearSpeed": 1200,
                       "OnComponentDestroy": null,
                       "OnComponentDisabled": null,
                       "OnComponentEnabled": null,
@@ -441,7 +444,12 @@
                       "OnComponentStart": null,
                       "OnComponentUpdate": null,
                       "PcGripActionLeft": "attack1",
-                      "PcGripActionRight": "attack2"
+                      "PcGripActionRight": "attack2",
+                      "PreserveReleaseAngularVelocity": true,
+                      "ResetVelocityOnGrab": true,
+                      "ThrowPeakNeighborhood": 3,
+                      "ThrowSignalSampleCount": 10,
+                      "UseThrowSignalEstimator": true
                     }
                   ],
                   "Children": []
@@ -488,7 +496,8 @@
                         "go": "27cffa28-046b-49fd-8d98-a1247b845418"
                       },
                       "UseAimPose": false,
-                      "UseVrInputDirect": true
+                      "UseVrInputDirect": true,
+                      "WarnWhenSourceMissing": true
                     }
                   ],
                   "Children": []
@@ -645,6 +654,9 @@
                         "component_type": "SkinnedModelRenderer"
                       },
                       "IsLeftHand": false,
+                      "MaxGrabDistance": 12,
+                      "MaxReleaseAngularSpeed": 60,
+                      "MaxReleaseLinearSpeed": 1200,
                       "OnComponentDestroy": null,
                       "OnComponentDisabled": null,
                       "OnComponentEnabled": null,
@@ -652,7 +664,12 @@
                       "OnComponentStart": null,
                       "OnComponentUpdate": null,
                       "PcGripActionLeft": "attack1",
-                      "PcGripActionRight": "attack2"
+                      "PcGripActionRight": "attack2",
+                      "PreserveReleaseAngularVelocity": true,
+                      "ResetVelocityOnGrab": true,
+                      "ThrowPeakNeighborhood": 3,
+                      "ThrowSignalSampleCount": 10,
+                      "UseThrowSignalEstimator": true
                     }
                   ],
                   "Children": []
@@ -699,7 +716,8 @@
                         "go": "d5fe9b06-4f25-44fc-a8f2-891a1f43b164"
                       },
                       "UseAimPose": false,
-                      "UseVrInputDirect": true
+                      "UseVrInputDirect": true,
+                      "WarnWhenSourceMissing": true
                     }
                   ],
                   "Children": []
@@ -818,6 +836,8 @@
           "__guid": "f2a3b4c5-d6e7-4890-b123-456789abcdef",
           "__enabled": true,
           "Flags": 0,
+          "FallbackEdgeRadius": 6.8600016,
+          "GrabPivot": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -1155,9 +1175,6 @@
       "CustomBounds": false
     },
     "GameObjectSystems": {
-      "Sandbox.MovieMaker.MovieRecorderSystem": {
-        "DisableClientRecording": false
-      },
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
@@ -1167,6 +1184,9 @@
         "Storage": {
           "$blob": "97e48d3f-6914-4f20-97b6-d679bb5ae25d"
         }
+      },
+      "Sandbox.MovieMaker.MovieRecorderSystem": {
+        "DisableClientRecording": false
       }
     }
   },

@@ -1,7 +1,7 @@
 {
   "Title": "Testbed",
   "Type": "game",
-  "Org": "facepunch",
+  "Org": "local",
   "Ident": "testbed",
   "Schema": 1,
   "IncludeSourceFiles": false,

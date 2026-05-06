@@ -24,3 +24,17 @@
 - `VRGrabber.MaxGrabDistance`：建議從 `10~14` 起調。
 - `VRGrabber.GripPressThreshold`：建議 `0.45~0.60`。
 - `VRGrabber.GripReleaseThreshold`：建議 `0.15~0.30`。
+
+## VRRootColliderStabilizer 角速度上限驗證（180/360/540）
+
+在 `Right Hand` 或 `Left Hand` 上掛載的 `VRRootColliderStabilizer` 中，固定 `RotationLerpSpeed`，只調整 `MaxDegreesPerSecond`。
+
+1. 設為 `180`，快速甩腕，觀察 root collider 明顯較慢追隨，轉向延遲最大。
+2. 設為 `360`，重複相同動作，應比 180 更快但仍有可感知限制。
+3. 設為 `540`，重複相同動作，應接近原本手感，限制感最弱。
+4. 三組都確認：不應出現瞬間翻轉或大幅過衝。
+
+## 預期結果
+
+- 數值越小，追隨越保守；數值越大，追隨越靈敏。
+- 在相同甩腕幅度下，`180` 的姿態變化速度應小於 `360`，`360` 應小於 `540`。
