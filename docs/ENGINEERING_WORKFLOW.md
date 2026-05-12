@@ -31,6 +31,15 @@ Naming convention:
 
 - `docs/specs/YYYY-MM-DD-<feature-name>.md`
 
+VR 遷移與製程相關之規範性文件（與 SBox-VR-Controller 對齊者）：
+
+- `docs/specs/vr-item-weapon-production-workflow.md`
+- `docs/specs/vr-locomotion-xmovement.md`
+- `docs/specs/vr-unit-test-plan.md`
+- `docs/specs/vr-animgraph-contract.md`
+- `docs/specs/vr-weapon-taxonomy.md`
+- `docs/references/sbox-vr-controller/README.md`（上游技術文檔複本索引）
+
 ## 2) TDD: Tests Before Implementation
 
 For each requirement:

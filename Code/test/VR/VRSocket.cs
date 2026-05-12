@@ -34,6 +34,9 @@ public sealed class VRSocket : Component, Component.ITriggerListener
     [Property, Group( "Snap" )]
     public float MaxSettleSpeed { get; set; } = 32.0f;
 
+    [Property, Group( "Snap" ), Description( "目標若處於雙手持握中，暫不吸附進 Socket，避免互相拉扯。" )]
+    public bool BlockSnapWhileTwoHanded { get; set; } = true;
+
     [Property, Group( "Lock" )]
     public SocketLockMode LockMode { get; set; } = SocketLockMode.ParentToSocket;
 
@@ -84,6 +87,8 @@ public sealed class VRSocket : Component, Component.ITriggerListener
     {
         if ( !item.IsValid() )
             return;
+        if ( BlockSnapWhileTwoHanded && IsTwoHandActive( item ) )
+            return;
         if ( RequireEmpty && _occupiedItem.IsValid() )
             return;
 
@@ -123,6 +128,8 @@ public sealed class VRSocket : Component, Component.ITriggerListener
         if ( !AutoSnapWhenSlowInTrigger )
             return;
         if ( !_hoverCandidate.IsValid() )
+            return;
+        if ( BlockSnapWhileTwoHanded && IsTwoHandActive( _hoverCandidate ) )
             return;
         if ( RequireEmpty && _occupiedItem.IsValid() )
             return;
@@ -179,6 +186,12 @@ public sealed class VRSocket : Component, Component.ITriggerListener
 
         _occupiedItem = item;
         socketable.NotifySocketed( this );
+    }
+
+    static bool IsTwoHandActive( GameObject item )
+    {
+        var stabilizer = item.Components.Get<VRTwoHandGripStabilizer>( FindMode.EverythingInSelfAndAncestors );
+        return stabilizer is not null && stabilizer.IsTwoHandActive;
     }
 
     /// <summary>將目前鎖在槽內的物件解鎖（可綁到其他輸入或按鈕）。</summary>

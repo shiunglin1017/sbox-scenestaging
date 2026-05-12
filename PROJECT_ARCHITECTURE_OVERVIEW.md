@@ -49,15 +49,29 @@
 
 ### VR 相關（最近重點）
 
+#### VR 輸入與 DI（移植自 SBox-VR-Controller）
+
+介面式輸入／位移抽象（`IVRInputProvider`、`IMovementInputSource` 等）**非** MS DI 容器，而以 `Components.Get` 自祖先解析；概念見 [`docs/references/sbox-vr-controller/VR_DI_ARCHITECTURE.md`](docs/references/sbox-vr-controller/VR_DI_ARCHITECTURE.md)，本倉庫範圍與未移植邊界見 [`docs/specs/vr-input-di-port.md`](docs/specs/vr-input-di-port.md)，實作程式在 [`Libraries/tft.vr.movement/`](Libraries/tft.vr.movement/)。
+
 - `Code/test/VR/VRPlayerController.cs`：VR 轉向（平滑/瞬轉）+ 頭向移動 + 重力控制；`EnableRightStickTurn` 可關閉右手轉向、僅保留位移
 - `Code/test/VR/VRPlayerRig.cs`：玩家根上集中啟用位移、桌面雙手模擬、左右 `VRGrabber`
 - `Code/VRLogic/VRInteractionRules.cs`：插槽 id／距離純邏輯（供 `VRSocket` 與單元測試）
 - `Code/test/VR/VRGrabber.cs`：VR 抓取/釋放（FixedJoint + 丟擲速度）
 - `Code/test/VR/VRGhostHandTarget.cs`：幽靈目標（無剛體；對齊 grip／attachment，供日後彈簧關節追蹤）
 - `Code/test/VR/Grabbable.cs`：可選標記可抓物，支援 Inspector 注入或快取 `Rigidbody`（與 `VRGrabber` 混合解析搭配）
+- `Code/test/VR/VRItemInteractionProfile.cs`：可抓物 prefab 之 Inspector 集中設定（質量預設、多握點／attachment 對照、可選同步主握點至 `Grabbable.GrabPivot`）；純規則見 `Code/VRLogic/VRItemInteractionProfileRules.cs`
 - `Code/test/VR/Socketable.cs`：標記可插槽物、插槽 ID、可選 Attach 對齊點
 - `Code/test/VR/VRSocket.cs`：插槽 Trigger、吸附半徑、放手後與 `VRGrabber` 銜接的吸附、可選低速自動吸附
 - `Code/test/VR/VRFallbackSimulator.cs`：VR fallback 模擬
+
+- `Code/VRLogic/VRThreePointTracker.cs`：頭／雙手 IK 目標寫入 AnimGraph、與 PlayerController 局部空間約定（架構見 `docs/specs/vr-three-point-tracker-architecture.md`）
+
+#### VR 規格與上游文件複本
+
+- **遷移與製程**：`docs/specs/vr-item-weapon-production-workflow.md`、`docs/specs/vr-weapon-taxonomy.md`、`docs/specs/vr-locomotion-xmovement.md`、`docs/specs/vr-input-di-port.md`、`docs/specs/vr-editor-item-interaction-facade.md`
+- **測試與 AnimGraph 邊界**：`docs/specs/vr-unit-test-plan.md`、`docs/specs/vr-animgraph-contract.md`
+- **建置／測試指令**：`docs/commands/dotnet-build-test.md`
+- **SBox-VR-Controller 技術文檔複本**（含 `VR_DI_ARCHITECTURE.md`）：`docs/references/sbox-vr-controller/README.md`
 
 #### VRGrabber 編輯器設定（檢核清單）
 
@@ -87,6 +101,7 @@
 - `facepunch.shatterglass`、`ShatterGlass`：玻璃破碎
 - `SplineTools`：樣條工具與編輯器工具
 - `weaponlab`：武器測試程式
+- `tft.vr.movement`：自 SBox-VR-Controller 遷移之 **XMovement** 與 **介面式 DI**（`IVRInputProvider`、`IMovementInputSource`、VR／鍵盤位移輸入服務）；見 `Libraries/tft.vr.movement/README.md`
 - `bugge.unity_importer`：Unity package/材質/貼圖匯入工具
 - `isotope.gitversioncontrol`：版本控制整合工具
 

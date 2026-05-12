@@ -1,6 +1,6 @@
 # 單元測試指令（CI／本機）
 
-與 `docs/specs/2026-05-05-vr-interaction-stack.md` 及 `.gitlab-ci.yml` 一致。
+與 `docs/specs/2026-05-05-vr-interaction-stack.md` 及 `.gitlab-ci.yml` 一致。另見 [dotnet-build-test.md](./commands/dotnet-build-test.md)（含 `testbed.csproj` 建置與 `--no-build` 注意事項）。
 
 ## 指令
 

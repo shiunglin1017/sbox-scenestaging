@@ -1,5 +1,6 @@
 using Sandbox;
 using System;
+using VRLogic;
 
 /// <summary>
 /// 標記可被抓取的物件，並可選擇明確指定或快取要使用的 <see cref="Rigidbody"/>，供 <see cref="VRGrabber"/> 等系統以混合解析讀取。
@@ -11,6 +12,9 @@ public sealed class Grabbable : Component
 
     [Property, Group( "Grab Pose" ), Description( "可選：物件明確抓取點。若設定，抓取會優先將此點對齊到手部抓取姿態。" )]
     public GameObject GrabPivot { get; set; }
+
+    [Property, Group( "Grab Pose" ), Description( "可選：ModelDoc attachment 名稱。預設 weapon_hold；留空白可停用 attachment 對齊。" )]
+    public string GrabAttachmentName { get; set; } = VrInteractionConstants.DefaultGripAttachmentName;
 
     [Property, Group( "Grab Pose" ), Description( "無 GrabPivot 時，邊緣吸附所使用的估計半徑（世界單位）。" )]
     public float FallbackEdgeRadius { get; set; } = 4.0f;
@@ -58,6 +62,31 @@ public sealed class Grabbable : Component
 
         var targetRotation = handPose.Rotation * pivotLocalRotation.Inverse;
         var targetPosition = handPose.Position - (targetRotation * objectToPivotLocal);
+        targetObjectPose = new Transform( targetPosition, targetRotation );
+        return true;
+    }
+
+    public bool TryGetAttachmentAlignedPose( Transform handPose, out Transform targetObjectPose )
+    {
+        targetObjectPose = default;
+
+        if ( string.IsNullOrWhiteSpace( GrabAttachmentName ) )
+            return false;
+
+        var skinnedRenderer = Components.Get<SkinnedModelRenderer>( FindMode.EnabledInSelfAndDescendants );
+        if ( !skinnedRenderer.IsValid() )
+            return false;
+
+        var attachmentTx = skinnedRenderer.GetAttachment( GrabAttachmentName.Trim() );
+        if ( !attachmentTx.HasValue )
+            return false;
+
+        var attachment = attachmentTx.Value;
+        var objectToAttachmentLocal = GameObject.WorldTransform.PointToLocal( attachment.Position );
+        var attachmentLocalRotation = GameObject.WorldRotation.Inverse * attachment.Rotation;
+
+        var targetRotation = handPose.Rotation * attachmentLocalRotation.Inverse;
+        var targetPosition = handPose.Position - (targetRotation * objectToAttachmentLocal);
         targetObjectPose = new Transform( targetPosition, targetRotation );
         return true;
     }

@@ -9,7 +9,7 @@
 - 固定**追蹤鏈**、**Trigger 偵測**、**ModelDoc attachment 命名**與官方 s&box 文件一致之開發契約。
 - 將 **Interactor／Interactable／Socket** 職責寫入規格：`VRGhostHandTarget`（呈現目標）、`VRGrabber`（選取＋關節）、`VRSocket`（槽位狀態）。
 - **抓取**：關節建立／釋放與 **FixedUpdate** 對齊；Grip 閾值與 wish 方向之純邏輯收斂至 `VRLogic` 並附單元測試。
-- **本體移動**：`VRPlayerController` 以 **OnFixedUpdate** 驅動 `CharacterController`（`Accelerate`／`ApplyFriction`／`Punch` 跳躍、可選蹲伏），與雙手物理步長一致。
+- **本體移動**：預設敘述為 `VRPlayerController` 以 **OnFixedUpdate** 驅動 `CharacterController`（`Accelerate`／`ApplyFriction`／`Punch` 跳躍、可選蹲伏），與雙手物理步長一致。若改採 **`Libraries/tft.vr.movement`** 之 `PlayerWalkController*`，則須與 `VRPlayerController` **擇一啟用**（互斥與驗收見 [vr-locomotion-xmovement.md](./vr-locomotion-xmovement.md)）。
 - **CI**：管線現階段僅 `dotnet test`（[UnitTests/testbed.unittest.csproj](../../UnitTests/testbed.unittest.csproj)）；**每完成計畫 todo 須本地／MR 通過同一測試命令**。
 - **DI（務實）**：純邏輯在 `VRLogic`；釋放廣播可替換為 `GripReleaseNotification.Publish`（預設轉發 `VRSocket.NotifyGripReleased`），利於日後多人或事件匯流排。
 
@@ -24,7 +24,7 @@
 
 - `docs/specs/2026-05-05-vr-interaction-stack.md`（本檔）。
 - `Code/VRLogic/*.cs`：`GrabInteractionRules`、`LocomotionWishRules`、`VrInteractionConstants`、`AlyxFeelTuningDefaults`。
-- `Code/test/VR/VRGrabber.cs`、`VRPlayerController.cs`、`GripReleaseNotification.cs`。
+- `Code/test/VR/VRGrabber.cs`、`VRPlayerController.cs`、`VRItemInteractionProfile.cs`、`GripReleaseNotification.cs`。
 - `UnitTests/*Tests.cs` 擴充。
 - `.gitlab-ci.yml`（單一 test job）。
 
@@ -57,11 +57,35 @@
 ### Socket：`VRSocket`
 
 - ID／半徑仍委託 `VRInteractionRules`；不直接依賴 `VRGrabber` 內部欄位。
+- 可選 `BlockSnapWhileTwoHanded`：當物件處於 `VRTwoHandGripStabilizer.IsTwoHandActive` 時暫停吸附，避免雙手持握與插槽互相拉扯。
 
 ### 本體：`VRPlayerController`
 
 - **轉向**保留於 `OnUpdate`（與顯示幀一致）。
 - **位移／跳躍／蹲伏**於 `OnFixedUpdate` 使用 `CharacterController` 之摩擦與加速 API，與 [ExampleComponents PlayerController](../../Code/ExampleComponents/PlayerController.cs)／Walker 風格一致。
+
+### Locomotion 擴充：`VRTurnAndTeleportSystem`
+
+- 右搖桿支援 `Snap Turn` / `Smooth Turn` 二擇一。
+- 支援 Arc Teleport（拋物線落點檢查），放開觸發鍵後瞬移玩家根。
+- `ComfortStrength01` 輸出可供 vignette/tunneling 視覺層讀取。
+
+### 遠距抓取：`VRDistanceGrabber`
+
+- 以手部瞄準方向選擇候選剛體，套用吸附速度拉向手部，再委託 `VRGrabber.TryQueueExternalGrab` 建立實際關節。
+- 候選評分與吸附速度由 `VRLogic.DistanceGrabRules` 處理，保持可測試性。
+
+### UI 互動：`VRUIPointerRay` / `VRUIPokeInteractor`
+
+- `VRUIPointerRay`：遠距雷射 hover/press。
+- `VRUIPokeInteractor`：近距離碰撞戳擊。
+- 兩者以 `VRUIInteractable` 作為共同交互代理層。
+
+### 機關操作：Linear / Rotary / Physical Button
+
+- `VRLinearDriveInteractable`：限制單軸位移。
+- `VRRotaryDriveInteractable`：限制單軸旋轉角。
+- `VRPhysicalButton`：以壓入深度判定按鈕觸發。
 
 ### `AlyxFeelTuningDefaults`
 
@@ -87,6 +111,14 @@
 - **純邏輯**：`VRLogic` 靜態規則，無 `Scene` 依賴。
 - **廣播**：`GripReleaseNotification.Publish` 可於測試或多人模組替換。
 - **薄膠水**：`Component` 內不引入完整 DI 容器。
+- **介面式 DI（可選路線）**：自 SBox-VR-Controller 移植之 `IVRInputProvider`／`IMovementInputSource` 等已置於 `Libraries/tft.vr.movement`；權威說明見 `docs/references/sbox-vr-controller/VR_DI_ARCHITECTURE.md`，本倉庫移植範圍見 [`vr-input-di-port.md`](./vr-input-di-port.md)。`VRGrabber` 現況仍可直接讀 `Input.VR`；日後可選擇改經 `IControllerInput` 以利替身測試。
+- **本體位移互斥**：若使用 `PlayerWalkController*`，與 `VRPlayerController` 擇一啟用，見 [`vr-locomotion-xmovement.md`](./vr-locomotion-xmovement.md)。
+
+## 全身 IK：三點追蹤與 `VRHand` 分工
+
+- **`VRThreePointTracker`**（`Code/VRLogic/VRThreePointTracker.cs`）：每幀將頭／雙手追蹤目標寫入 Avatar 之 `SkinnedModelRenderer`／AnimGraph 約定參數，處理身體 Yaw／XY 跟隨與蹲下比例等；**不**建立 `FixedJoint`、**不**取代 `VRGrabber` 之抓取關節。
+- **引擎 `VRHand` + AnimGraph**：手指 curl／手部網格呈現由官方元件與圖驅動；與三點追蹤之手腕／手臂 IK 目標為**分層**關係。
+- **規格登錄（SDD）**：行為細節與參數名以 [`vr-three-point-tracker-architecture.md`](./vr-three-point-tracker-architecture.md) 為準；AnimGraph／C++ IK 邊界與單測範圍見 [`vr-animgraph-contract.md`](./vr-animgraph-contract.md)。
 
 ## Rollout and rollback
 

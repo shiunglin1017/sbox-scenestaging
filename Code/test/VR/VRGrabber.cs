@@ -58,6 +58,21 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	[Property, Group( "投擲估算" ), Description( "為真時放手沿用估算角速度；否則維持既有行為（角速度歸零）。" )]
 	public bool PreserveReleaseAngularVelocity { get; set; } = true;
 
+	[Property, Group( "幾何 Fallback 手勢" ), Description( "Hover 且無 Attachment/Pivot 時，使用中心射線距離驅動手指 curl（僅視覺）。" )]
+	public bool EnableHoverGeometryCurlPreview { get; set; } = true;
+
+	[Property, Group( "幾何 Fallback 手勢" ), Description( "此距離（含）內視為手指完全彎曲。" ), Range( 0f, 50f ), Step( 0.5f )]
+	public float HoverCurlFullDistance { get; set; } = 2f;
+
+	[Property, Group( "幾何 Fallback 手勢" ), Description( "此距離（含）外視為手指不彎曲。" ), Range( 0f, 100f ), Step( 0.5f )]
+	public float HoverCurlStartDistance { get; set; } = 14f;
+
+	[Property, Group( "幾何 Fallback 手勢" ), Description( "為真時將 hover curl 值寫入 HandRenderer animation 參數（預設參數名 grip）。" )]
+	public bool ApplyHoverCurlToHandRenderer { get; set; } = true;
+
+	[Property, Group( "幾何 Fallback 手勢" ), Description( "HandRenderer animation 參數名（常見為 grip）。" )]
+	public string HoverCurlParameterName { get; set; } = "grip";
+
 	/// <summary>Idle：無候選；Hovering：Trigger 內有物；Holding：已建立關節。</summary>
 	public GrabInteractorState State { get; private set; } = GrabInteractorState.Idle;
 
@@ -70,6 +85,33 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 	Vector3 _releaseLinearVelocity;
 	Vector3 _releaseAngularVelocity;
 	readonly ThrowSignalBuffer _throwSignalBuffer = new();
+	bool _isHoverGeometryPreviewActive;
+	float _hoverCurlPreview01;
+	Transform _hoverPreviewHandPose;
+
+	public bool IsHoverGeometryPreviewActive => _isHoverGeometryPreviewActive;
+	public float HoverCurlPreview01 => _hoverCurlPreview01;
+	public bool IsHoldingObject => _heldObject is not null && _heldObject.IsValid();
+	public GameObject HeldObject => _heldObject;
+
+	public bool TryGetHoverPreviewHandPose( out Transform pose )
+	{
+		pose = _hoverPreviewHandPose;
+		return _isHoverGeometryPreviewActive;
+	}
+
+	/// <summary>
+	/// 由外部系統（如 Distance Grab）請求抓取指定目標；實際建關節仍於 FixedUpdate 執行。
+	/// </summary>
+	public bool TryQueueExternalGrab( GameObject target )
+	{
+		if ( !target.IsValid() || _heldObject is not null || _pendingGrabTarget is not null )
+			return false;
+		if ( !TryResolveRigidbody( target, out _ ) )
+			return false;
+		_pendingGrabTarget = target;
+		return true;
+	}
 
 	protected override void OnUpdate()
 	{
@@ -80,6 +122,7 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 			Time.Now,
 			Math.Max( 1, ThrowSignalSampleCount ) );
 		var candidate = FindClosestValidCandidate();
+		UpdateHoverGeometryPreview( candidate );
 
 		if ( GrabInteractionRules.ShouldStartGrab( grip, GripPressThreshold, _heldObject is not null, candidate is not null ) )
 			_pendingGrabTarget = candidate;
@@ -157,6 +200,72 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 			State = GrabInteractorState.Hovering;
 		else
 			State = GrabInteractorState.Idle;
+	}
+
+	void UpdateHoverGeometryPreview( GameObject candidate )
+	{
+		_isHoverGeometryPreviewActive = false;
+		_hoverCurlPreview01 = 0f;
+		_hoverPreviewHandPose = default;
+
+		if ( !EnableHoverGeometryCurlPreview || _heldObject is not null || !candidate.IsValid() )
+		{
+			ApplyHoverCurlVisual( 0f );
+			return;
+		}
+
+		var handPose = ResolveHandPose();
+		var grabbable = candidate.Components.Get<Grabbable>( FindMode.EnabledInSelfAndDescendants );
+
+		// 有 attachment / pivot 時不走幾何 fallback 預覽。
+		if ( grabbable.IsValid() &&
+			(grabbable.TryGetAttachmentAlignedPose( handPose, out _) || grabbable.TryGetPivotAlignedPose( handPose, out _ )) )
+		{
+			ApplyHoverCurlVisual( 0f );
+			return;
+		}
+
+		var toTarget = candidate.WorldPosition - handPose.Position;
+		if ( toTarget.LengthSquared <= 0.0001f )
+		{
+			ApplyHoverCurlVisual( 0f );
+			return;
+		}
+
+		var previewRotation = Rotation.LookAt( toTarget.Normal, handPose.Rotation.Up );
+		_hoverPreviewHandPose = new Transform( handPose.Position, previewRotation );
+
+		var ray = new Ray( handPose.Position, handPose.Rotation.Forward );
+		var tr = Scene.Trace.Ray( ray, MaxGrabDistance )
+			.IgnoreGameObjectHierarchy( GameObject.Parent )
+			.Run();
+
+		var distance = toTarget.Length;
+		if ( tr.Hit && tr.GameObject.IsValid() && IsSameOrChildOf( tr.GameObject, candidate ) )
+			distance = handPose.Position.Distance( tr.HitPosition );
+
+		_hoverCurlPreview01 = VRItemInteractionProfileRules.MapDistanceToCurl( distance, HoverCurlFullDistance, HoverCurlStartDistance );
+		_isHoverGeometryPreviewActive = true;
+		ApplyHoverCurlVisual( _hoverCurlPreview01 );
+	}
+
+	void ApplyHoverCurlVisual( float value01 )
+	{
+		if ( !ApplyHoverCurlToHandRenderer || !HandRenderer.IsValid() || string.IsNullOrWhiteSpace( HoverCurlParameterName ) )
+			return;
+
+		HandRenderer.Set( HoverCurlParameterName.Trim(), value01.Clamp( 0f, 1f ) );
+	}
+
+	static bool IsSameOrChildOf( GameObject candidate, GameObject root )
+	{
+		for ( var node = candidate; node.IsValid(); node = node.Parent )
+		{
+			if ( node == root )
+				return true;
+		}
+
+		return false;
 	}
 
 	GameObject FindClosestValidCandidate()
@@ -271,6 +380,9 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 		var handPose = ResolveHandPose();
 		var grabbable = obj.Components.Get<Grabbable>( FindMode.EnabledInSelfAndDescendants );
+
+		if ( grabbable.IsValid() && grabbable.TryGetAttachmentAlignedPose( handPose, out objectPose ) )
+			return true;
 
 		if ( grabbable.IsValid() && grabbable.TryGetPivotAlignedPose( handPose, out objectPose ) )
 			return true;

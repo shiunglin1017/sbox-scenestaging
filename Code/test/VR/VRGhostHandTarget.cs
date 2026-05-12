@@ -33,6 +33,15 @@ public sealed class VRGhostHandTarget : Component
 	[Property, Group( "Sync" ), Description( "為真時在 OnFixedUpdate 寫入 Transform，較利於與物理步長對齊。" )]
 	public bool SyncInFixedUpdate { get; set; }
 
+	[Property, Group( "Hover Preview" ), Description( "為真時，若關聯 VRGrabber 正在幾何 fallback hover，幽靈手會預先轉向該抓取姿勢（僅視覺）。" )]
+	public bool UseGrabberHoverPreviewPose { get; set; } = true;
+
+	[Property, Group( "Hover Preview" ), Description( "可選：指定對應手的 VRGrabber；未指定時會自動向祖先查找。" )]
+	public VRGrabber PreviewGrabber { get; set; }
+
+	[Property, Group( "Hover Preview" ), Description( "預抓取旋轉跟隨速度。" ), Range( 0f, 60f ), Step( 0.5f )]
+	public float HoverPreviewRotationLerpSpeed { get; set; } = 18f;
+
 	[Property, Group( "Debug" )]
 	public bool ShowDebugGizmo { get; set; }
 
@@ -89,7 +98,17 @@ public sealed class VRGhostHandTarget : Component
 
 		_warnedMissingSource = false;
 
-		WorldTransform = worldTx.Value;
+		var final = worldTx.Value;
+		if ( UseGrabberHoverPreviewPose && ResolvePreviewGrabber().TryGetHoverPreviewHandPose( out var previewPose ) )
+		{
+			var t = (HoverPreviewRotationLerpSpeed * Time.Delta).Clamp( 0f, 1f );
+			final = new Transform(
+				final.Position,
+				Rotation.Slerp( final.Rotation, previewPose.Rotation, t ),
+				final.Scale );
+		}
+
+		WorldTransform = final;
 	}
 
 	Transform? ResolveBaseWorldTransform()
@@ -104,6 +123,14 @@ public sealed class VRGhostHandTarget : Component
 			return TransformSource.WorldTransform;
 
 		return null;
+	}
+
+	VRGrabber ResolvePreviewGrabber()
+	{
+		if ( PreviewGrabber.IsValid() )
+			return PreviewGrabber;
+
+		return Components.Get<VRGrabber>( FindMode.EverythingInSelfAndAncestors );
 	}
 
 	protected override void DrawGizmos()

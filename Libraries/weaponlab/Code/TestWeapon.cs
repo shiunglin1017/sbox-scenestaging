@@ -13,6 +13,12 @@ public enum GrabAction
 	PushButton
 }
 
+public enum WeaponFireSimulationMode
+{
+	Trace,
+	Projectile
+}
+
 public interface IGrabAction
 {
 	/// <summary>
@@ -50,6 +56,12 @@ public sealed class TestWeapon : Component, PlayerController.IEvents, ICameraSet
 	[Property, Group( "Config" )]
 	public float RayDistance { get; set; } = 4096;
 
+	[Property, Group( "Config" ), Description( "射擊模擬模式：Trace（即時射線）或 Projectile（實體彈體）。" )]
+	public WeaponFireSimulationMode FireSimulationMode { get; set; } = WeaponFireSimulationMode.Trace;
+
+	[Property, Group( "Config" ), Description( "Trace 模式下使用專案 Collision Rules 的 tag（例如 bullet）。留空則不套用。" )]
+	public string TraceCollisionTag { get; set; } = "bullet";
+
 	[Property, Group( "Ammo" )]
 	public int Ammo { get; set; } = 30;
 
@@ -79,6 +91,15 @@ public sealed class TestWeapon : Component, PlayerController.IEvents, ICameraSet
 
 	[Property, Group( "Weapon-Specific" ), Range( 0, 2 ), Step( 0.05f )]
 	public float IronsightsFireScale { get; set; } = 0.5f;
+
+	[Property, Group( "Projectile" ), Description( "Projectile 模式：初速（世界單位/秒）。" )]
+	public float ProjectileSpeed { get; set; } = 3200f;
+
+	[Property, Group( "Projectile" ), Description( "Projectile 模式：重力（世界單位/秒²）。" )]
+	public float ProjectileGravity { get; set; } = 600f;
+
+	[Property, Group( "Projectile" ), Description( "Projectile 模式：存活秒數。" ), Range( 0.1f, 20f ), Step( 0.1f )]
+	public float ProjectileLifetime { get; set; } = 4f;
 
 	[Property, Group( "Recoil" )]
 	public RangedFloat PitchRecoil { get; set; } = new RangedFloat( -0.25f, -0.5f );
@@ -418,7 +439,7 @@ public sealed class TestWeapon : Component, PlayerController.IEvents, ICameraSet
 
 		Sound.Play( PrimaryAttackSound, shootPosition );
 
-		ShootBullet();
+		FireWeapon( shootPosition );
 
 	}
 
@@ -426,17 +447,49 @@ public sealed class TestWeapon : Component, PlayerController.IEvents, ICameraSet
 	{
 	}
 
-	void ShootBullet()
+	void FireWeapon( Vector3 shootPosition )
+	{
+		if ( FireSimulationMode == WeaponFireSimulationMode.Projectile )
+		{
+			ShootProjectile( shootPosition );
+			return;
+		}
+
+		ShootTrace();
+	}
+
+	void ShootTrace()
 	{
 		var ray = Scene.Camera.WorldTransform.ForwardRay;
 		ray.Forward += Vector3.Random * 0.01f;
 
-		var tr = Scene.Trace.Ray( ray, RayDistance )
-					.IgnoreGameObjectHierarchy( GameObject.Parent )
-					.Run();
+		var trace = Scene.Trace.Ray( ray, RayDistance )
+			.IgnoreGameObjectHierarchy( GameObject.Parent );
+		if ( !string.IsNullOrWhiteSpace( TraceCollisionTag ) )
+			trace = trace.WithCollisionRules( TraceCollisionTag.Trim() );
 
-		//Sound.Play( shootSound, Transform.Position );
+		var tr = trace.Run();
 
+		ApplyImpact( tr );
+	}
+
+	void ShootProjectile( Vector3 shootPosition )
+	{
+		var ray = Scene.Camera.WorldTransform.ForwardRay;
+		ray.Forward += Vector3.Random * 0.01f;
+		var projectile = WeaponProjectile.Spawn(
+			Scene,
+			shootPosition,
+			ray.Forward.Normal * ProjectileSpeed,
+			ProjectileGravity,
+			ProjectileLifetime,
+			GameObject.Parent,
+			ApplyImpact );
+		projectile.Name = "weapon_projectile";
+	}
+
+	void ApplyImpact( SceneTraceResult tr )
+	{
 		if ( !tr.Hit || tr.GameObject is null )
 			return;
 
@@ -496,7 +549,7 @@ public sealed class TestWeapon : Component, PlayerController.IEvents, ICameraSet
 			arms.Parent = viewmodel;
 
 			var model = arms.Components.Create<SkinnedModelRenderer>();
-			model.Model = Model.Load( "models/first_person/first_person_arms.vmdl" );
+			model.Model = Model.Load( "models/first_person/first_person_arms_preview.vmdl" );
 			model.BoneMergeTarget = modelRender;
 			model.RenderOptions.Overlay = true;
 			model.RenderOptions.Game = false;
