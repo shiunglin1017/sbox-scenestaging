@@ -6,5 +6,5 @@ using Sandbox;
 public static class GripReleaseNotification
 {
 	/// <summary>由 <see cref="VRGrabber"/> 於釋放時呼叫；多人時可替換為網路匯流排（見 <see cref="GrabNetworkContracts"/>）。</summary>
-	public static Action<Scene, GameObject>? Publish { get; set; } = VRSocket.NotifyGripReleased;
+	public static Action<Scene, GameObject> Publish { get; set; } = VRSocket.NotifyGripReleased;
 }

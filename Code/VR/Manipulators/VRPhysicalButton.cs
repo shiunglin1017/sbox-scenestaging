@@ -26,7 +26,7 @@ public sealed class VRPhysicalButton : Component, Component.ITriggerListener
 	protected override void OnStart()
 	{
 		base.OnStart();
-		_startLocalPos = Transform.LocalPosition;
+		_startLocalPos = LocalPosition;
 	}
 
 	void Component.ITriggerListener.OnTriggerEnter( Collider other )
@@ -56,8 +56,8 @@ public sealed class VRPhysicalButton : Component, Component.ITriggerListener
 			desiredPos += axis * amount;
 		}
 
-		Transform.LocalPosition = desiredPos;
-		var moved = (Transform.LocalPosition - _startLocalPos).Length;
+		LocalPosition = desiredPos;
+		var moved = (LocalPosition - _startLocalPos).Length;
 		PressDepth01 = (moved / MathF.Max( 0.001f, TravelDistance )).Clamp( 0f, 1f );
 		IsPressed = PressDepth01 >= PressThreshold01;
 	}

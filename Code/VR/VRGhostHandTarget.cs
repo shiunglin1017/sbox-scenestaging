@@ -6,7 +6,7 @@ using Sandbox;
 /// </summary>
 /// <remarks>
 /// 預設以 <see cref="TransformSource"/>（通常為已掛 <see cref="Sandbox.VR.VRTrackedObject"/> 或由 <see cref="VRFallbackSimulator"/> 驅動的手根）為來源，桌面與真 VR 一致。
-/// 若 <see cref="UseVrInputDirect"/> 且 <see cref="Game.IsRunningInVR"/>，則改讀 <see cref="Input.VR.LeftHand"/>／<see cref="Input.VR.RightHand"/> 的 <c>Transform</c>（grip pose，世界空間）。
+/// 若 <see cref="UseVrInputDirect"/> 且 <see cref="Game.IsRunningInVR"/>，則改讀 Input.VR 左右手的 Transform（grip pose，世界空間）。
 /// 若指定 <see cref="HandRenderer"/> 與 <see cref="AttachmentName"/> 且 attachment 存在，則對齊該點（與 <see cref="VRGrabber"/> 吸附邏輯一致）。
 /// 日後若與物理關節併用出現抖動，可改 <see cref="SyncInFixedUpdate"/> 為真，或改以 Keyframed <c>PhysicsBody</c> 在 Fixed 步驟中跟隨目標。
 /// </remarks>

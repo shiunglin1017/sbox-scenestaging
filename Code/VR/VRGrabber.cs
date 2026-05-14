@@ -331,8 +331,8 @@ public sealed class VRGrabber : Component, Component.ITriggerListener
 
 		if ( ComputeGrabPose( obj, out var targetObjectPose ) )
 		{
-			obj.Transform.Position = targetObjectPose.Position;
-			obj.Transform.Rotation = targetObjectPose.Rotation;
+		obj.WorldPosition = targetObjectPose.Position;
+		obj.WorldRotation = targetObjectPose.Rotation;
 			if ( ResetVelocityOnGrab && TryResolveRigidbody( obj, out var rb ) )
 			{
 				rb.Velocity = Vector3.Zero;

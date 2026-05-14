@@ -1,6 +1,6 @@
 using Sandbox;
-using TFT.VR.Services;
-using XMovement;
+using System;
+using System.Reflection;
 
 /// <summary>
 /// VR 玩家根節點：集中啟用／停用位移、桌面模擬、雙手抓取與幽靈目標，並可選自動串接 <see cref="CharacterController"/>。
@@ -78,52 +78,92 @@ public sealed class VRPlayerRig : Component
 
 	void ApplyXMovementToggles( bool enableXMovement )
 	{
-		var simple = Components.Get<PlayerWalkControllerSimple>( FindMode.EverythingInSelfAndDescendants );
-		var complex = Components.Get<PlayerWalkControllerComplex>( FindMode.EverythingInSelfAndDescendants );
+		var simple = FindComponentByName( "PlayerWalkControllerSimple" );
+		var complex = FindComponentByName( "PlayerWalkControllerComplex" );
 
 		if ( simple is null && complex is null )
 			return;
 
 		if ( PreferSimpleXMovement )
 		{
-			if ( simple is not null )
-				simple.Enabled = enableXMovement;
-			if ( complex is not null )
-				complex.Enabled = false;
+			SetComponentEnabled( simple, enableXMovement );
+			SetComponentEnabled( complex, false );
 			return;
 		}
 
-		if ( complex is not null )
-			complex.Enabled = enableXMovement;
-		if ( simple is not null )
-			simple.Enabled = false;
+		SetComponentEnabled( complex, enableXMovement );
+		SetComponentEnabled( simple, false );
 	}
 
 	void AutoWireInputSources()
 	{
-		var composite = Components.Get<CompositeMovementInputSource>( FindMode.EverythingInSelfAndDescendants );
+		var composite = FindComponentByName( "CompositeMovementInputSource" );
 		if ( composite is null )
 			return;
 
-		if ( composite.VRSource is null )
+		var vrSource = FindComponentByName( "VRMovementInputSource" );
+		var kbmSource = FindComponentByName( "KeyboardMovementInputSource" );
+		var provider = FindComponentByName( "SandboxVRInputProvider" );
+
+		if ( GetPropertyValue( composite, "VRSource" ) is null )
 		{
-			var vrSource = Components.Get<VRMovementInputSource>( FindMode.EverythingInSelfAndDescendants );
 			if ( vrSource is not null )
-				composite.VRSource = vrSource;
+				SetPropertyValue( composite, "VRSource", vrSource );
 		}
 
-		if ( composite.KbmSource is null )
+		if ( GetPropertyValue( composite, "KbmSource" ) is null )
 		{
-			var kbmSource = Components.Get<KeyboardMovementInputSource>( FindMode.EverythingInSelfAndDescendants );
 			if ( kbmSource is not null )
-				composite.KbmSource = kbmSource;
+				SetPropertyValue( composite, "KbmSource", kbmSource );
 		}
 
-		if ( composite.VRSource is not null && composite.VRSource.Provider is null )
+		var compositeVrSource = GetPropertyValue( composite, "VRSource" );
+		if ( compositeVrSource is not null && GetPropertyValue( compositeVrSource, "Provider" ) is null )
 		{
-			var provider = Components.Get<SandboxVRInputProvider>( FindMode.EverythingInSelfAndDescendants );
 			if ( provider is not null )
-				composite.VRSource.Provider = provider;
+				SetPropertyValue( compositeVrSource, "Provider", provider );
 		}
+	}
+
+	Component FindComponentByName( string typeName )
+	{
+		foreach ( var c in Components.GetAll<Component>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			if ( c is null )
+				continue;
+			var t = c.GetType();
+			if ( string.Equals( t.Name, typeName, StringComparison.Ordinal ) )
+				return c;
+		}
+		return null;
+	}
+
+	static void SetComponentEnabled( Component component, bool enabled )
+	{
+		if ( component is null )
+			return;
+		component.Enabled = enabled;
+	}
+
+	static object GetPropertyValue( object target, string name )
+	{
+		if ( target is null )
+			return null;
+		var prop = target.GetType().GetProperty( name, BindingFlags.Instance | BindingFlags.Public );
+		if ( prop is null || !prop.CanRead )
+			return null;
+		return prop.GetValue( target );
+	}
+
+	static void SetPropertyValue( object target, string name, object value )
+	{
+		if ( target is null )
+			return;
+		var prop = target.GetType().GetProperty( name, BindingFlags.Instance | BindingFlags.Public );
+		if ( prop is null || !prop.CanWrite )
+			return;
+		if ( value is not null && !prop.PropertyType.IsAssignableFrom( value.GetType() ) )
+			return;
+		prop.SetValue( target, value );
 	}
 }

@@ -23,17 +23,17 @@ public sealed class VRLinearDriveInteractable : Component
 	protected override void OnStart()
 	{
 		base.OnStart();
-		_startLocalPos = Transform.LocalPosition;
-		_startLocalRot = Transform.LocalRotation;
+		_startLocalPos = LocalPosition;
+		_startLocalRot = LocalRotation;
 	}
 
 	protected override void OnFixedUpdate()
 	{
 		var axis = LocalAxis.LengthSquared <= 0.0001f ? Vector3.Forward : LocalAxis.Normal;
-		var offset = Transform.LocalPosition - _startLocalPos;
+		var offset = LocalPosition - _startLocalPos;
 		var distance = Vector3.Dot( offset, axis ).Clamp( MinDistance, MaxDistance );
-		Transform.LocalPosition = _startLocalPos + axis * distance;
-		Transform.LocalRotation = _startLocalRot;
+		LocalPosition = _startLocalPos + axis * distance;
+		LocalRotation = _startLocalRot;
 
 		var range = MathF.Max( 0.001f, MaxDistance - MinDistance );
 		Normalized01 = ((distance - MinDistance) / range).Clamp( 0f, 1f );

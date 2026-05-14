@@ -25,12 +25,12 @@ public sealed class VRRotaryDriveInteractable : Component
 	protected override void OnStart()
 	{
 		base.OnStart();
-		_startAngles = Transform.LocalRotation.Angles();
+		_startAngles = LocalRotation.Angles();
 	}
 
 	protected override void OnFixedUpdate()
 	{
-		var a = Transform.LocalRotation.Angles();
+		var a = LocalRotation.Angles();
 		var raw = Axis switch
 		{
 			RotationAxis.Pitch => a.pitch - _startAngles.pitch,
@@ -59,7 +59,7 @@ public sealed class VRRotaryDriveInteractable : Component
 				break;
 		}
 
-		Transform.LocalRotation = applied.ToRotation();
+		LocalRotation = applied.ToRotation();
 		var range = MathF.Max( 0.001f, MaxAngle - MinAngle );
 		Normalized01 = ((CurrentAngle - MinAngle) / range).Clamp( 0f, 1f );
 	}

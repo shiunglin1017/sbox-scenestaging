@@ -80,8 +80,8 @@ public sealed class VRPlayerController : Component
 			if ( MathF.Abs( rightJoystick.x ) > SnapTurnThreshold && canSnapTurn )
 			{
 				float turnAmount = rightJoystick.x > 0.0f ? SnapTurnAngle : -SnapTurnAngle;
-				Transform.Rotation *= Rotation.FromYaw( turnAmount );
-				canSnapTurn = false;
+			WorldRotation *= Rotation.FromYaw( turnAmount );
+			canSnapTurn = false;
 			}
 			else if ( MathF.Abs( rightJoystick.x ) < SnapTurnResetThreshold )
 			{
@@ -91,7 +91,7 @@ public sealed class VRPlayerController : Component
 		else if ( EnableRightStickTurn && MathF.Abs( rightJoystick.x ) > 0.1f )
 		{
 			float turnAmount = -rightJoystick.x * TurnSpeed * Time.Delta;
-			Transform.Rotation *= Rotation.FromYaw( turnAmount );
+			WorldRotation *= Rotation.FromYaw( turnAmount );
 		}
 	}
 
@@ -113,7 +113,7 @@ public sealed class VRPlayerController : Component
 		{
 			leftJoystick = LocomotionWishRules.ToStickFromAnalogMove( Input.AnalogMove );
 			var cam = Scene.Camera;
-			headRot = cam.IsValid() ? cam.WorldTransform.Rotation : Transform.Rotation;
+			headRot = cam.IsValid() ? cam.WorldTransform.Rotation : WorldRotation;
 		}
 
 		if ( EnableCrouch )
@@ -168,8 +168,8 @@ public sealed class VRPlayerController : Component
 			if ( !Controller.IsOnGround )
 			{
 				var duckDelta = StandHeight - CrouchHeight;
-				Controller.MoveTo( Transform.Position + Vector3.Up * duckDelta, false );
-				Transform.ClearLerp();
+			Controller.MoveTo( WorldPosition + Vector3.Up * duckDelta, false );
+			Transform.ClearInterpolation();
 			}
 			return;
 		}
