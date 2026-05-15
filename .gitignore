@@ -37,6 +37,10 @@ Libraries/*/.bin
 *.log
 local/
 
+# Cursor / Spec Kit 專案設定（不需版本控制）
+.cursor/
+.specify/
+
 # 作業系統預設生成的暫存檔 (Windows / macOS)
 .DS_Store
 Thumbs.db
