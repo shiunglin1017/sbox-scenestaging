@@ -1,3 +1,34 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Git LFS — binary / large game assets
+# Text formats (*.vmdl, *.vmat, *.cs, etc.) stay in regular Git.
+
+# Textures (source images)
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.bmp filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+
+# 3D source
+*.fbx filter=lfs diff=lfs merge=lfs -text
+
+# Audio / video
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.sound filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.webm filter=lfs diff=lfs merge=lfs -text
+
+# Terrain
 *.terrain filter=lfs diff=lfs merge=lfs -text
+
+# Unity-import animation clips (YAML but often very large)
+*.anim filter=lfs diff=lfs merge=lfs -text
