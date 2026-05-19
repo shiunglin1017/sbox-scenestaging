@@ -1,0 +1,1770 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc30:version{8c2d7a91-9c42-4bf0-883a-5a3b1762d4f1} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "player_s_material.vmat"
+								to = "player_s_material.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "models/player/materials/character2_facial.vmat"
+					},
+				]
+			},
+			{
+				_class = "PhysicsJointList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "joints"
+						children = 
+						[
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "pelvis"
+								child_body = "arm_upper_L"
+								anchor_origin = [ 18.528658, 8.522276, 0.65373 ]
+								anchor_angles = [ -2.621933, -104.284378, 78.496338 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = false
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = false
+								min_twist_angle = 0.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointRevolute"
+								parent_body = "arm_upper_L"
+								child_body = "arm_lower_L"
+								anchor_origin = [ 8.453307, 0.16849, 2.10801 ]
+								anchor_angles = [ -39.647858, -48.552406, 104.256607 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_limit = true
+								min_angle = -150.300003
+								max_angle = 0.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "arm_lower_L"
+								child_body = "hand_L"
+								anchor_origin = [ 10.568779, -0.000005, -0.000015 ]
+								anchor_angles = [ -0.000058, -90.0, -97.04834 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "pelvis"
+								child_body = "arm_upper_R"
+								anchor_origin = [ 18.52865, -8.52228, 0.653746 ]
+								anchor_angles = [ 2.622147, -75.715706, 78.496307 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointRevolute"
+								parent_body = "arm_upper_R"
+								child_body = "arm_lower_R"
+								anchor_origin = [ 8.69456, -0.110372, 1.380742 ]
+								anchor_angles = [ -14.40274, 37.550827, 89.861374 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_limit = true
+								min_angle = -93.300003
+								max_angle = 0.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "arm_lower_R"
+								child_body = "hand_R"
+								anchor_origin = [ 10.568783, -0.000002, -0.000017 ]
+								anchor_angles = [ 0.000056, -89.999969, -97.048355 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "pelvis"
+								child_body = "head"
+								anchor_origin = [ 19.753229, -0.000002, -0.000006 ]
+								anchor_angles = [ 90.0, -90.000099, -180.0 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -21.370001
+								max_twist_angle = 90.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "pelvis"
+								child_body = "leg_upper_L"
+								anchor_origin = [ 0.546501, 4.310101, -0.000011 ]
+								anchor_angles = [ -0.000079, -90.000023, 95.42485 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointRevolute"
+								parent_body = "leg_upper_L"
+								child_body = "leg_lower_L"
+								anchor_origin = [ 12.306062, -0.666402, -2.414587 ]
+								anchor_angles = [ 0.0, 0.0, -105.429001 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_limit = true
+								min_angle = 0.0
+								max_angle = 110.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "leg_lower_L"
+								child_body = "foot_L"
+								anchor_origin = [ 11.397676, -0.000003, -0.000002 ]
+								anchor_angles = [ 0.000012, -89.999992, 10.004232 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "pelvis"
+								child_body = "leg_upper_R"
+								anchor_origin = [ 0.546501, -4.310103, -0.000002 ]
+								anchor_angles = [ -0.000079, -90.000023, 95.42485 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+							{
+								_class = "PhysicsJointRevolute"
+								parent_body = "leg_upper_R"
+								child_body = "leg_lower_R"
+								anchor_origin = [ 12.879076, -0.13462, -2.246598 ]
+								anchor_angles = [ -0.0, 0.0, -93.429131 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_limit = true
+								min_angle = 0.0
+								max_angle = 110.0
+							},
+							{
+								_class = "PhysicsJointConical"
+								parent_body = "leg_lower_R"
+								child_body = "foot_R"
+								anchor_origin = [ 11.397675, 0.000002, -0.000001 ]
+								anchor_angles = [ -0.000013, -89.999992, 10.004232 ]
+								collision_enabled = false
+								linear_strength = 0.0
+								angular_strength = 0.0
+								friction = 0.1
+								enable_swing_limit = true
+								swing_limit = 30.0
+								swing_offset_angle = [ 0.0, 0.0, 0.0 ]
+								enable_twist_limit = true
+								min_twist_angle = -15.0
+								max_twist_angle = 15.0
+							},
+						]
+					},
+				]
+				disabled = true
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "hulls"
+						children = 
+						[
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "pelvis"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"pelvis",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "arm_upper_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"arm_upper_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "arm_lower_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"arm_lower_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "hand_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"hand_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "arm_upper_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"arm_upper_R",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "arm_lower_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"arm_lower_R",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "hand_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"hand_R",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "head"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"head",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "leg_upper_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"leg_upper_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "leg_lower_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"leg_lower_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "foot_L"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"foot_L",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "leg_upper_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"leg_upper_R",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "leg_lower_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"leg_lower_R",
+									]
+								}
+							},
+							{
+								_class = "PhysicsHullFile"
+								parent_bone = "foot_R"
+								surface_prop = "flesh"
+								collision_tags = "solid"
+								recenter_on_parent_bone = false
+								offset_origin = [ 0.0, 0.0, 0.0 ]
+								offset_angles = [ 0.0, 0.0, 0.0 ]
+								align_origin_x_type = "None"
+								align_origin_y_type = "None"
+								align_origin_z_type = "None"
+								filename = "models/player_voxel/player_hull.fbx"
+								import_scale = 1.0
+								faceMergeAngle = 10.0
+								maxHullVertices = 0
+								import_mode = "HullPerMesh"
+								optimization_algorithm = "Exact"
+								import_filter = 
+								{
+									exclude_by_default = true
+									exception_list = 
+									[
+										"foot_R",
+									]
+								}
+							},
+						]
+					},
+				]
+				disabled = true
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "player"
+						filename = "models/player/playermodel-guide-animgraph-episode-3/player_voxel/bns_player.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "AnimationList"
+				children = 
+				[
+					{
+						_class = "AnimFile"
+						name = "idle"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/idle.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 10
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkN"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 10
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkN.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkNE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 10
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkNE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkNW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 26
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkNW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkS"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 10
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkS.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkSE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 10
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkSE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkSW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 26
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkSW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "walkW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 26
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/walkW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 5
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runN"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 5
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runN.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runNE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 5
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runNE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runNW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 21
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runNW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runS"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 5
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runS.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runSE"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 5
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runSE.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runSW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 21
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runSW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "runW"
+						children = 
+						[
+							{
+								_class = "ExtractMotion"
+								extract_tx = true
+								extract_ty = true
+								extract_tz = false
+								extract_rz = false
+								linear = false
+								quadratic = false
+								root_bone_name = ""
+								motion_type = "Single"
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 21
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 10
+								event_keys = 
+								{
+									Attachment = "foot_R"
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 26
+								event_keys = 
+								{
+									Attachment = "foot_L"
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/player_voxel/animations/runW.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 60.0
+						take = 0
+						reverse = false
+					},
+				]
+				disabled = true
+				default_root_bone_name = ""
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "foot_R"
+						parent_bone = "foot_R"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "foot_L"
+						parent_bone = "foot_L"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
+			{
+				_class = "IKData"
+				children = 
+				[
+					{
+						_class = "IKChain"
+						name = "footR"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "leg_upper_R"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "leg_lower_R"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "foot_R"
+												bone = "foot_R"
+											},
+										]
+										bone = "leg_lower_R"
+									},
+								]
+								bone = "leg_upper_R"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "IK_foot_R"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = "models/player_voxel/player_voxel.vanmgrph"
+		base_model_name = ""
+	}
+}
