@@ -1,0 +1,23 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Roughness Test",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "roughnesstest",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "facepunch.v_m4a1#109633"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "scenes/tests/rendering/roughness_test.vmat"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Shader Lighting Transparent Custom",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "shaderlightingtransparentcustom",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "facepunch.v_m4a1#109633"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "scenes/tests/rendering/shader_lighting_transparent_custom.vmat"
+      }
+    }
+  }
+}

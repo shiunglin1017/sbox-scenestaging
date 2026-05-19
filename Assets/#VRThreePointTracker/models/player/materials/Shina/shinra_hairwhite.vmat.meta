@@ -1,0 +1,23 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Shinra Hairwhite",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "shinrahairwhite",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "pilgrim.terrystart#11488"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "#vrthreepointtracker/models/player/materials/shina/shinra_hairwhite.vmat"
+      }
+    }
+  }
+}

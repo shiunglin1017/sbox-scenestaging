@@ -1,0 +1,23 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Deamonwing Black",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "deamonwingblack",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "pilgrim.terrystart#11488"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "#vrthreepointtracker/models/player/materials/shina/deamonwing_black.vmat"
+      }
+    }
+  }
+}

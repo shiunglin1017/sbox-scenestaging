@@ -1,24 +1,22 @@
 {
   "publish": {
-    "Allowed": true,
     "Enabled": true,
     "ProjectConfig": {
       "Title": "rock_cliffs_atlas",
       "Type": "material",
       "Org": "rust",
       "Ident": "rock_cliffs_atlas",
-      "Tags": null,
       "Schema": 0,
-      "HasAssets": false,
-      "AssetsPath": null,
+      "IncludeSourceFiles": false,
       "Resources": null,
-      "MenuResources": null,
-      "HasCode": false,
-      "CodePath": null,
       "PackageReferences": null,
-      "EditorReferences": null,
+      "EditorReferences": [
+        "facepunch.v_m4a1#109633"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
       "Metadata": {
-        "SingleAssetSource": "models/rust_nature/rocks/rock_cliffs_atlas.vmat"
+        "SingleAssetSource": "models/rocks/rock_cliffs_atlas.vmat"
       }
     }
   }

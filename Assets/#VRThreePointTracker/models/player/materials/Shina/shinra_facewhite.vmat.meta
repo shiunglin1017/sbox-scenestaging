@@ -1,0 +1,24 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Shinra Facewhite",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "shinrafacewhite",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "pilgrim.terrystart#11488",
+        "facepunch.v_m4a1#109633"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "#vrthreepointtracker/models/player/materials/shina/shinra_facewhite.vmat"
+      }
+    }
+  }
+}

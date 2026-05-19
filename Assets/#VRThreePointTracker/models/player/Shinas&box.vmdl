@@ -1,0 +1,1027 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc30:version{8c2d7a91-9c42-4bf0-883a-5a3b1762d4f1} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "body.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_body.vmat"
+							},
+							{
+								from = "boots.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_bootsblack.vmat"
+							},
+							{
+								from = "face.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_facewhite.vmat"
+							},
+							{
+								from = "hair.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_hairwhite.vmat"
+							},
+							{
+								from = "shirt.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_shirtblack.vmat"
+							},
+							{
+								from = "underwear.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_underwearwhite.vmat"
+							},
+							{
+								from = "wing.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/deamonwing_black.vmat"
+							},
+							{
+								from = "faceoverlay.vmat"
+								to = "#vrthreepointtracker/models/player/materials/shina/shinra_faceoverlay.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/default.vmat"
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "#vrthreepointtracker/models/player/shinra/fbx/shinas&box1_bake.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"BodySecondary",
+								"Boots",
+								"Hair",
+								"Underwear",
+								"Wing",
+								"Body",
+								"Kemomimi",
+								"ShortPants",
+								"Shirt",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "AnimationList"
+				children = 
+				[
+					{
+						_class = "AnimFile"
+						name = "Shinaidle"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "#vrthreepointtracker/models/player/animations/shinaidle.fbx"
+						start_frame = 0
+						end_frame = 249
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "Shinaidle1"
+						children = 
+						[
+							{
+								_class = "AnimLinearDelta"
+								spline = false
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = true
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "#vrthreepointtracker/models/player/animations/shinaidle.fbx"
+						start_frame = -1
+						end_frame = 1033
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "Shinacrouch"
+						children = 
+						[
+							{
+								_class = "AnimSubtract"
+								anim_name = "Shinaidle"
+								frame = 0
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "#vrthreepointtracker/models/player/animations/shinacrouch.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "Folder"
+						name = "walk"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "ShinawalkN"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 47
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 17
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinawalkn.fbx"
+								start_frame = 0
+								end_frame = 60
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinawalkE"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 47
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 18
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinawalke.fbx"
+								start_frame = 0
+								end_frame = 55
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinawalkS"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 39
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 11
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinawalks.fbx"
+								start_frame = -1
+								end_frame = 58
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinawalkW"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 49
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 21
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinawalkw.fbx"
+								start_frame = -1
+								end_frame = 55
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "run"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "ShinarunE"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 36
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 15
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinarune.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinarunN"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 35
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 15
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinarunn.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinarunS"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 29
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 14
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinaruns.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "ShinarunW"
+								children = 
+								[
+									{
+										_class = "ExtractMotion"
+										extract_tx = true
+										extract_ty = true
+										extract_tz = false
+										extract_rz = false
+										linear = false
+										quadratic = false
+										root_bone_name = ""
+										motion_type = "Single"
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 36
+										event_keys = 
+										{
+											Attachment = "footsoundR"
+											Foot = "1"
+											Volume = 1.0
+										}
+									},
+									{
+										_class = "AnimEvent"
+										event_class = "AE_FOOTSTEP"
+										event_frame = 15
+										event_keys = 
+										{
+											Attachment = "footsoundL"
+											Foot = "0"
+											Volume = 1.0
+										}
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "#vrthreepointtracker/models/player/animations/shinarunw.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+				]
+				default_root_bone_name = ""
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "vr_avatarH"
+						parent_bone = ""
+						relative_origin = [ 0.0, 0.0, 53.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "vr_avatarHfloor"
+						parent_bone = ""
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "avatar_eyes"
+						parent_bone = "Head"
+						relative_origin = [ 2.1, 2.9, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "footR"
+						parent_bone = "Foot_R"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "footL"
+						parent_bone = "Foot_L"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "avatar_hand_l_grip"
+						parent_bone = "Hand_L"
+						relative_origin = [ 2.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "avatar_hand_r_grip"
+						parent_bone = "Hand_R"
+						relative_origin = [ 2.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+				]
+			},
+			{
+				_class = "IKData"
+				children = 
+				[
+					{
+						_class = "IKChain"
+						name = "head_rot"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "Chest1"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "Neck1"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Head"
+												bone = "Head"
+											},
+										]
+										bone = "Neck"
+									},
+								]
+								bone = "Chest"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = false
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "Head"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "head_pos"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "Spine"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "Chest"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Neck"
+												children = 
+												[
+													{
+														_class = "IKChainJoint"
+														name = "Head1"
+														bone = "Head"
+													},
+												]
+												bone = "Neck"
+											},
+										]
+										bone = "Chest"
+									},
+								]
+								bone = "Spine"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "Head"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "handL"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "UpperArm_L"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "LowerArm_L"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Hand_L"
+												bone = "Hand_L"
+											},
+										]
+										bone = "LowerArm_L"
+									},
+								]
+								bone = "UpperArm_L"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "hand_L_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "handR"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "UpperArm_R"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "LowerArm_R"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Hand_R"
+												bone = "Hand_R"
+											},
+										]
+										bone = "LowerArm_R"
+									},
+								]
+								bone = "UpperArm_R"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "hand_R_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "footL"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "UpperLeg_L"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "LowerLeg_L"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Foot_L"
+												bone = "Foot_L"
+											},
+										]
+										bone = "LowerLeg_L"
+									},
+								]
+								bone = "UpperLeg_L"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "Foot_L"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "footR"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "UpperLeg_R"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "LowerLeg_R"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "Foot_R"
+												bone = "Foot_R"
+											},
+										]
+										bone = "LowerLeg_R"
+									},
+								]
+								bone = "UpperLeg_R"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "Foot_R"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+				]
+			},
+			{
+				_class = "BoneMarkupList"
+				bone_cull_type = "None"
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = "#vrthreepointtracker/models/player/shinas&box.vanmgrph"
+		base_model_name = ""
+	}
+}
