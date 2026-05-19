@@ -118,13 +118,19 @@
           "__guid": "3a9780ce-b41d-4caf-a6a0-809285edbfad",
           "__enabled": true,
           "Flags": 0,
+          "AirFriction": 0.2,
+          "AirWishMax": 50,
           "Controller": {
             "_type": "component",
             "component_id": "a262aee0-5a63-4cad-9cf3-67316846c344",
             "go": "9e9d237a-c20f-40f7-b569-ab9be5766351",
             "component_type": "CharacterController"
           },
+          "CrouchHeight": 36,
+          "EnableCrouch": false,
           "EnableRightStickTurn": true,
+          "GroundFriction": 6,
+          "JumpStrength": 300,
           "MoveSpeed": 100,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
@@ -135,6 +141,7 @@
           "SnapTurnAngle": 45,
           "SnapTurnResetThreshold": 0.2,
           "SnapTurnThreshold": 0.5,
+          "StandHeight": 64,
           "TurnSpeed": 120,
           "UseSnapTurn": false
         },
@@ -418,6 +425,8 @@
                       "__enabled": true,
                       "Flags": 0,
                       "AttachmentName": "weapon_hold",
+                      "GripPressThreshold": 0.5,
+                      "GripReleaseThreshold": 0.2,
                       "HandRenderer": {
                         "_type": "component",
                         "component_id": "7b61afa7-32f1-4687-a0a8-f0896f368389",
@@ -431,53 +440,6 @@
                       "OnComponentFixedUpdate": null,
                       "OnComponentStart": null,
                       "OnComponentUpdate": null
-                    }
-                  ],
-                  "Children": []
-                },
-                {
-                  "__guid": "c0ffee01-0001-4000-8001-000000000001",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "GhostTarget_Left",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [
-                    {
-                      "__type": "VRGhostHandTarget",
-                      "__guid": "c0ffee01-0001-4000-8001-000000000002",
-                      "__enabled": true,
-                      "Flags": 0,
-                      "AttachmentName": "weapon_hold",
-                      "HandRenderer": {
-                        "_type": "component",
-                        "component_id": "7b61afa7-32f1-4687-a0a8-f0896f368389",
-                        "go": "da3bd340-d220-413b-a844-95f8329a32dd",
-                        "component_type": "SkinnedModelRenderer"
-                      },
-                      "IsLeftHand": true,
-                      "OnComponentDestroy": null,
-                      "OnComponentDisabled": null,
-                      "OnComponentEnabled": null,
-                      "OnComponentFixedUpdate": null,
-                      "OnComponentStart": null,
-                      "OnComponentUpdate": null,
-                      "ShowDebugGizmo": false,
-                      "SyncInFixedUpdate": true,
-                      "TransformSource": {
-                        "_type": "gameobject",
-                        "go": "27cffa28-046b-49fd-8d98-a1247b845418"
-                      },
-                      "UseAimPose": false,
-                      "UseVrInputDirect": true
                     }
                   ],
                   "Children": []
@@ -625,6 +587,8 @@
                       "__enabled": true,
                       "Flags": 0,
                       "AttachmentName": "weapon_hold",
+                      "GripPressThreshold": 0.5,
+                      "GripReleaseThreshold": 0.2,
                       "HandRenderer": {
                         "_type": "component",
                         "component_id": "7663b01a-1bd4-46aa-b576-578b406a736d",
@@ -641,55 +605,102 @@
                     }
                   ],
                   "Children": []
-                },
-                {
-                  "__guid": "c0ffee02-0002-4000-8002-000000000001",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "GhostTarget_Right",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [
-                    {
-                      "__type": "VRGhostHandTarget",
-                      "__guid": "c0ffee02-0002-4000-8002-000000000002",
-                      "__enabled": true,
-                      "Flags": 0,
-                      "AttachmentName": "weapon_hold",
-                      "HandRenderer": {
-                        "_type": "component",
-                        "component_id": "7663b01a-1bd4-46aa-b576-578b406a736d",
-                        "go": "01bfb8ea-d52a-4104-a4eb-22cdb57da0c5",
-                        "component_type": "SkinnedModelRenderer"
-                      },
-                      "IsLeftHand": false,
-                      "OnComponentDestroy": null,
-                      "OnComponentDisabled": null,
-                      "OnComponentEnabled": null,
-                      "OnComponentFixedUpdate": null,
-                      "OnComponentStart": null,
-                      "OnComponentUpdate": null,
-                      "ShowDebugGizmo": false,
-                      "SyncInFixedUpdate": true,
-                      "TransformSource": {
-                        "_type": "gameobject",
-                        "go": "d5fe9b06-4f25-44fc-a8f2-891a1f43b164"
-                      },
-                      "UseAimPose": false,
-                      "UseVrInputDirect": true
-                    }
-                  ],
-                  "Children": []
                 }
               ]
+            },
+            {
+              "__guid": "c0ffee01-0001-4000-8001-000000000001",
+              "__version": 2,
+              "Flags": 0,
+              "Name": "GhostTarget_Left",
+              "Position": "0,5.22229004,0",
+              "Rotation": "0,0,0,1",
+              "Scale": "1,1,1",
+              "Tags": "",
+              "Enabled": true,
+              "NetworkMode": 2,
+              "NetworkFlags": 0,
+              "NetworkOrphaned": 0,
+              "NetworkTransmit": true,
+              "OwnerTransfer": 1,
+              "Components": [
+                {
+                  "__type": "VRGhostHandTarget",
+                  "__guid": "c0ffee01-0001-4000-8001-000000000002",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AttachmentName": "weapon_hold",
+                  "HandRenderer": {
+                    "_type": "component",
+                    "component_id": "7b61afa7-32f1-4687-a0a8-f0896f368389",
+                    "go": "da3bd340-d220-413b-a844-95f8329a32dd",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "IsLeftHand": true,
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "ShowDebugGizmo": false,
+                  "SyncInFixedUpdate": true,
+                  "TransformSource": {
+                    "_type": "gameobject",
+                    "go": "27cffa28-046b-49fd-8d98-a1247b845418"
+                  },
+                  "UseAimPose": false,
+                  "UseVrInputDirect": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "__guid": "c0ffee02-0002-4000-8002-000000000001",
+              "__version": 2,
+              "Flags": 0,
+              "Name": "GhostTarget_Right",
+              "Position": "0,-6.93261719,0",
+              "Rotation": "0,0,0,0",
+              "Scale": "1,1,1",
+              "Tags": "",
+              "Enabled": true,
+              "NetworkMode": 2,
+              "NetworkFlags": 0,
+              "NetworkOrphaned": 0,
+              "NetworkTransmit": true,
+              "OwnerTransfer": 1,
+              "Components": [
+                {
+                  "__type": "VRGhostHandTarget",
+                  "__guid": "c0ffee02-0002-4000-8002-000000000002",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AttachmentName": "weapon_hold",
+                  "HandRenderer": {
+                    "_type": "component",
+                    "component_id": "7663b01a-1bd4-46aa-b576-578b406a736d",
+                    "go": "01bfb8ea-d52a-4104-a4eb-22cdb57da0c5",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "IsLeftHand": false,
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "ShowDebugGizmo": false,
+                  "SyncInFixedUpdate": true,
+                  "TransformSource": {
+                    "_type": "gameobject",
+                    "go": "d5fe9b06-4f25-44fc-a8f2-891a1f43b164"
+                  },
+                  "UseAimPose": false,
+                  "UseVrInputDirect": true
+                }
+              ],
+              "Children": []
             }
           ]
         }
@@ -795,7 +806,9 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "OverrideMassCenter": false,
+          "PreciseContacts": false,
           "RigidbodyFlags": 0,
+          "SleepThreshold": 2,
           "StartAsleep": false
         },
         {
@@ -2199,7 +2212,9 @@
               "OnComponentStart": null,
               "OnComponentUpdate": null,
               "OverrideMassCenter": false,
+              "PreciseContacts": false,
               "RigidbodyFlags": 0,
+              "SleepThreshold": 2,
               "StartAsleep": false
             },
             {
@@ -2410,7 +2425,9 @@
                   "OnComponentStart": null,
                   "OnComponentUpdate": null,
                   "OverrideMassCenter": false,
+                  "PreciseContacts": false,
                   "RigidbodyFlags": 0,
+                  "SleepThreshold": 2,
                   "StartAsleep": false
                 },
                 {
@@ -2525,8 +2542,8 @@
                           "__version": 2,
                           "Flags": 12288,
                           "Name": "Spine4",
-                          "Position": "3.49967456,-0.25989601,5.40018082E-05",
-                          "Rotation": "-3.31550837E-07,-1.4603138E-06,0.0152778886,0.999883354",
+                          "Position": "3.49967456,-0.259896189,5.40018082E-05",
+                          "Rotation": "-3.31550837E-07,-1.4603138E-06,0.0152778905,0.999883354",
                           "Scale": "1,1,1",
                           "Tags": "",
                           "Enabled": true,
@@ -2567,7 +2584,9 @@
                               "OnComponentStart": null,
                               "OnComponentUpdate": null,
                               "OverrideMassCenter": false,
+                              "PreciseContacts": false,
                               "RigidbodyFlags": 0,
+                              "SleepThreshold": 2,
                               "StartAsleep": false
                             },
                             {
@@ -2736,8 +2755,8 @@
                               "__version": 2,
                               "Flags": 12288,
                               "Name": "L_Clavicle",
-                              "Position": "7.50419426,-1.59551287,1.43724346",
-                              "Rotation": "-0.488502562,-0.518918812,-0.586989284,0.384099334",
+                              "Position": "7.50419426,-1.59551311,1.43724346",
+                              "Rotation": "-0.488502562,-0.518918812,-0.586989343,0.384099364",
                               "Scale": "1,1,1",
                               "Tags": "",
                               "Enabled": true,
@@ -2778,7 +2797,9 @@
                                   "OnComponentStart": null,
                                   "OnComponentUpdate": null,
                                   "OverrideMassCenter": false,
+                                  "PreciseContacts": false,
                                   "RigidbodyFlags": 0,
+                                  "SleepThreshold": 2,
                                   "StartAsleep": false
                                 },
                                 {
@@ -2859,8 +2880,8 @@
                                   "__version": 2,
                                   "Flags": 12288,
                                   "Name": "L_UpperArm",
-                                  "Position": "2.52905846,-0.213031501,-0.111823313",
-                                  "Rotation": "-0.616248548,0.184854999,-0.127045184,0.754934371",
+                                  "Position": "2.52905798,-0.213031471,-0.111823358",
+                                  "Rotation": "-0.616248488,0.184855014,-0.127045169,0.754934371",
                                   "Scale": "1,1,1",
                                   "Tags": "",
                                   "Enabled": true,
@@ -2901,7 +2922,9 @@
                                       "OnComponentStart": null,
                                       "OnComponentUpdate": null,
                                       "OverrideMassCenter": false,
+                                      "PreciseContacts": false,
                                       "RigidbodyFlags": 0,
+                                      "SleepThreshold": 2,
                                       "StartAsleep": false
                                     },
                                     {
@@ -2981,8 +3004,8 @@
                                       "__version": 2,
                                       "Flags": 12288,
                                       "Name": "L_Forearm",
-                                      "Position": "9.17805195,2.50302255E-05,-2.31980812E-05",
-                                      "Rotation": "-0.0815143809,-0.0534555577,0.000515219057,0.99523747",
+                                      "Position": "9.17805195,2.49743462E-05,-2.31938902E-05",
+                                      "Rotation": "-0.0815143809,-0.0534555279,0.000515216729,0.99523747",
                                       "Scale": "1,1,1",
                                       "Tags": "",
                                       "Enabled": true,
@@ -3023,7 +3046,9 @@
                                           "OnComponentStart": null,
                                           "OnComponentUpdate": null,
                                           "OverrideMassCenter": false,
+                                          "PreciseContacts": false,
                                           "RigidbodyFlags": 0,
+                                          "SleepThreshold": 2,
                                           "StartAsleep": false
                                         },
                                         {
@@ -3104,8 +3129,8 @@
                                           "__version": 2,
                                           "Flags": 12288,
                                           "Name": "L_Hand",
-                                          "Position": "9.02689552,-0.224043906,-0.081969291",
-                                          "Rotation": "0.683746576,0.116454124,-0.0706914812,0.716890275",
+                                          "Position": "9.02689552,-0.22404395,-0.0819687918",
+                                          "Rotation": "0.683746636,0.116454117,-0.0706914887,0.716890275",
                                           "Scale": "1,1,1",
                                           "Tags": "",
                                           "Enabled": true,
@@ -3146,7 +3171,9 @@
                                               "OnComponentStart": null,
                                               "OnComponentUpdate": null,
                                               "OverrideMassCenter": false,
+                                              "PreciseContacts": false,
                                               "RigidbodyFlags": 0,
+                                              "SleepThreshold": 2,
                                               "StartAsleep": false
                                             },
                                             {
@@ -3746,8 +3773,8 @@
                               "__version": 2,
                               "Flags": 12288,
                               "Name": "R_Clavicle",
-                              "Position": "7.50221825,-1.59760642,-1.45408249",
-                              "Rotation": "0.474422276,0.539637446,-0.567984223,0.401383877",
+                              "Position": "7.50221825,-1.59760678,-1.45408249",
+                              "Rotation": "0.474422276,0.539637566,-0.567984223,0.401383936",
                               "Scale": "1,1,1",
                               "Tags": "",
                               "Enabled": true,
@@ -3788,7 +3815,9 @@
                                   "OnComponentStart": null,
                                   "OnComponentUpdate": null,
                                   "OverrideMassCenter": false,
+                                  "PreciseContacts": false,
                                   "RigidbodyFlags": 0,
+                                  "SleepThreshold": 2,
                                   "StartAsleep": false
                                 },
                                 {
@@ -3869,8 +3898,8 @@
                                   "__version": 2,
                                   "Flags": 12288,
                                   "Name": "R_UpperArm",
-                                  "Position": "2.51516652,-0.227554873,0.12561658",
-                                  "Rotation": "0.651077211,-0.174672127,-0.128674328,0.727345347",
+                                  "Position": "2.51516604,-0.227554604,0.12561667",
+                                  "Rotation": "0.651077211,-0.174672097,-0.128674313,0.727345228",
                                   "Scale": "1,1,1",
                                   "Tags": "",
                                   "Enabled": true,
@@ -3911,7 +3940,9 @@
                                       "OnComponentStart": null,
                                       "OnComponentUpdate": null,
                                       "OverrideMassCenter": false,
+                                      "PreciseContacts": false,
                                       "RigidbodyFlags": 0,
+                                      "SleepThreshold": 2,
                                       "StartAsleep": false
                                     },
                                     {
@@ -3991,8 +4022,8 @@
                                       "__version": 2,
                                       "Flags": 12288,
                                       "Name": "R_Forearm",
-                                      "Position": "9.34292889,-0.000111989677,5.68442047E-05",
-                                      "Rotation": "0.0710193589,0.0364797711,0.00342673622,0.996801734",
+                                      "Position": "9.34292793,-0.00011151284,5.6614168E-05",
+                                      "Rotation": "0.0710193589,0.0364798307,0.00342673529,0.996801674",
                                       "Scale": "1,1,1",
                                       "Tags": "",
                                       "Enabled": true,
@@ -4033,7 +4064,9 @@
                                           "OnComponentStart": null,
                                           "OnComponentUpdate": null,
                                           "OverrideMassCenter": false,
+                                          "PreciseContacts": false,
                                           "RigidbodyFlags": 0,
+                                          "SleepThreshold": 2,
                                           "StartAsleep": false
                                         },
                                         {
@@ -4114,8 +4147,8 @@
                                           "__version": 2,
                                           "Flags": 12288,
                                           "Name": "R_Hand",
-                                          "Position": "8.77123356,-0.225224823,0.0692361668",
-                                          "Rotation": "-0.680863976,-0.116622895,-0.0704051256,0.719629526",
+                                          "Position": "8.77123356,-0.225224301,0.0692366362",
+                                          "Rotation": "-0.680863976,-0.116622925,-0.0704051331,0.719629586",
                                           "Scale": "1,1,1",
                                           "Tags": "",
                                           "Enabled": true,
@@ -4156,7 +4189,9 @@
                                               "OnComponentStart": null,
                                               "OnComponentUpdate": null,
                                               "OverrideMassCenter": false,
+                                              "PreciseContacts": false,
                                               "RigidbodyFlags": 0,
+                                              "SleepThreshold": 2,
                                               "StartAsleep": false
                                             },
                                             {
@@ -4754,8 +4789,8 @@
                                   "__version": 2,
                                   "Flags": 12288,
                                   "Name": "Head1",
-                                  "Position": "10.4596786,-0.962577999,1.00135803E-05",
-                                  "Rotation": "-0.998368502,-0.0570997931,-1.21295452E-05,-6.89178705E-07",
+                                  "Position": "10.4596825,-0.962578714,9.53674316E-06",
+                                  "Rotation": "-0.998368502,-0.0570997968,-1.21295452E-05,-6.92903996E-07",
                                   "Scale": "1,1,1",
                                   "Tags": "",
                                   "Enabled": true,
@@ -4796,7 +4831,9 @@
                                       "OnComponentStart": null,
                                       "OnComponentUpdate": null,
                                       "OverrideMassCenter": false,
+                                      "PreciseContacts": false,
                                       "RigidbodyFlags": 0,
+                                      "SleepThreshold": 2,
                                       "StartAsleep": false
                                     },
                                     {
@@ -5717,7 +5754,7 @@
               "Flags": 12288,
               "Name": "L_Thigh",
               "Position": "2.8426671,-4.51525211,0.795132637",
-              "Rotation": "-0.485931128,0.513667941,-0.489829332,0.509983957",
+              "Rotation": "-0.485931128,0.513667941,-0.489829361,0.509983957",
               "Scale": "1,1,1",
               "Tags": "",
               "Enabled": true,
@@ -5758,7 +5795,9 @@
                   "OnComponentStart": null,
                   "OnComponentUpdate": null,
                   "OverrideMassCenter": false,
+                  "PreciseContacts": false,
                   "RigidbodyFlags": 0,
+                  "SleepThreshold": 2,
                   "StartAsleep": false
                 },
                 {
@@ -5838,8 +5877,8 @@
                   "__version": 2,
                   "Flags": 12288,
                   "Name": "L_Calf",
-                  "Position": "16.131773,-0.201047152,0.00912429299",
-                  "Rotation": "-0.000477889553,-0.00596558163,0.0340667963,0.999401748",
+                  "Position": "16.131773,-0.201045826,0.00912529696",
+                  "Rotation": "-0.000477891415,-0.0059655793,0.0340667963,0.999401808",
                   "Scale": "1,1,1",
                   "Tags": "",
                   "Enabled": true,
@@ -5880,7 +5919,9 @@
                       "OnComponentStart": null,
                       "OnComponentUpdate": null,
                       "OverrideMassCenter": false,
+                      "PreciseContacts": false,
                       "RigidbodyFlags": 0,
+                      "SleepThreshold": 2,
                       "StartAsleep": false
                     },
                     {
@@ -5961,8 +6002,8 @@
                       "__version": 2,
                       "Flags": 12288,
                       "Name": "L_Foot",
-                      "Position": "16.9529819,-0.221039534,-0.0137561522",
-                      "Rotation": "0.0247103982,-0.0155474469,-0.558441222,0.829030097",
+                      "Position": "16.9529839,-0.221038133,-0.0137580102",
+                      "Rotation": "0.0247104187,-0.0155474981,-0.558441281,0.829030097",
                       "Scale": "1,1,1",
                       "Tags": "",
                       "Enabled": true,
@@ -6003,7 +6044,9 @@
                           "OnComponentStart": null,
                           "OnComponentUpdate": null,
                           "OverrideMassCenter": false,
+                          "PreciseContacts": false,
                           "RigidbodyFlags": 0,
+                          "SleepThreshold": 2,
                           "StartAsleep": false
                         },
                         {
@@ -6083,8 +6126,8 @@
                           "__version": 2,
                           "Flags": 12288,
                           "Name": "L_Toe0",
-                          "Position": "3.7357285,0.71897763,-0.0447013378",
-                          "Rotation": "-0.00528250635,0.00183232129,-0.247654304,0.968832254",
+                          "Position": "3.73572874,0.718977213,-0.0447016954",
+                          "Rotation": "-0.00528252125,0.00183236599,-0.247654319,0.968832254",
                           "Scale": "1,1,1",
                           "Tags": "",
                           "Enabled": true,
@@ -6125,7 +6168,9 @@
                               "OnComponentStart": null,
                               "OnComponentUpdate": null,
                               "OverrideMassCenter": false,
+                              "PreciseContacts": false,
                               "RigidbodyFlags": 0,
+                              "SleepThreshold": 2,
                               "StartAsleep": false
                             },
                             {
@@ -6505,7 +6550,9 @@
                   "OnComponentStart": null,
                   "OnComponentUpdate": null,
                   "OverrideMassCenter": false,
+                  "PreciseContacts": false,
                   "RigidbodyFlags": 0,
+                  "SleepThreshold": 2,
                   "StartAsleep": false
                 },
                 {
@@ -6586,7 +6633,7 @@
                   "Flags": 12288,
                   "Name": "R_Calf",
                   "Position": "16.1323681,-0.202201292,-0.0140517401",
-                  "Rotation": "0.0005925484,0.0071746679,0.0340541042,0.999394119",
+                  "Rotation": "0.0005925484,0.0071746083,0.0340541042,0.999394178",
                   "Scale": "1,1,1",
                   "Tags": "",
                   "Enabled": true,
@@ -6627,7 +6674,9 @@
                       "OnComponentStart": null,
                       "OnComponentUpdate": null,
                       "OverrideMassCenter": false,
+                      "PreciseContacts": false,
                       "RigidbodyFlags": 0,
+                      "SleepThreshold": 2,
                       "StartAsleep": false
                     },
                     {
@@ -6708,8 +6757,8 @@
                       "__version": 2,
                       "Flags": 12288,
                       "Name": "R_Foot",
-                      "Position": "16.946064,-0.220666647,0.00925636292",
-                      "Rotation": "-0.0195471626,0.0128133232,-0.559363365,0.828593016",
+                      "Position": "16.946064,-0.220666945,0.00925444812",
+                      "Rotation": "-0.0195471663,0.0128133213,-0.559363365,0.828592956",
                       "Scale": "1,1,1",
                       "Tags": "",
                       "Enabled": true,
@@ -6750,7 +6799,9 @@
                           "OnComponentStart": null,
                           "OnComponentUpdate": null,
                           "OverrideMassCenter": false,
+                          "PreciseContacts": false,
                           "RigidbodyFlags": 0,
+                          "SleepThreshold": 2,
                           "StartAsleep": false
                         },
                         {
@@ -6830,8 +6881,8 @@
                           "__version": 2,
                           "Flags": 12288,
                           "Name": "R_Toe0",
-                          "Position": "3.72831392,0.725812078,0.0355977416",
-                          "Rotation": "0.0388666093,-0.00671024621,0.246734977,-0.968280137",
+                          "Position": "3.72831392,0.725812435,0.035597682",
+                          "Rotation": "0.0388666093,-0.0067102015,0.246735021,-0.968280137",
                           "Scale": "1,1,1",
                           "Tags": "",
                           "Enabled": true,
@@ -6872,7 +6923,9 @@
                               "OnComponentStart": null,
                               "OnComponentUpdate": null,
                               "OverrideMassCenter": false,
+                              "PreciseContacts": false,
                               "RigidbodyFlags": 0,
+                              "SleepThreshold": 2,
                               "StartAsleep": false
                             },
                             {
@@ -7310,6 +7363,11 @@
       "Sandbox.SelectionSetsSystem": {
         "Data": {
           "SelectionSets": []
+        }
+      },
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "cce58cc5-b6cc-4bcc-aeac-17715d70fd44"
         }
       },
       "Sandbox.MovieMaker.MovieRecorderSystem": {

@@ -11,9 +11,31 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = [  ]
-						use_global_default = true
-						global_default_material = "materials/default.vmat"
+						remaps = 
+						[
+							{
+								from = "shinano_body.vmat"
+								to = "shinano/material/shinano_body.vmat"
+							},
+							{
+								from = "shinano_costume.vmat"
+								to = "shinano/material/shinano_costume.vmat"
+							},
+							{
+								from = "shinano_face.vmat"
+								to = "shinano/material/shinano_face.vmat"
+							},
+							{
+								from = "shinano_hair.vmat"
+								to = "shinano/material/shinano_hair.vmat"
+							},
+							{
+								from = "shinano_face_alpha.vmat"
+								to = "shinano/material/shinano_face_alpha.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "shinano/material/shinano_body_flat.vmat"
 					},
 				]
 			},
